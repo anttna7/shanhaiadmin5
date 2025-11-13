@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SH Admin - 管理后台</title>
     <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="/static/css/components.css">
 </head>
 <body>
     <div class="container">
@@ -15,6 +16,7 @@
             <nav class="menu">
                 <ul>
                     <li><a href="#dashboard" class="active">仪表板</a></li>
+                    <li id="tenantMenuItem" style="display: none;"><a href="#tenants">租户管理</a></li>
                     <li><a href="#users">用户管理</a></li>
                     <li><a href="#roles">角色管理</a></li>
                     <li><a href="#departments">部门管理</a></li>
@@ -57,6 +59,77 @@
                             <h3>在线用户</h3>
                             <p class="stat-number" id="onlineUsers">0</p>
                         </div>
+                    </div>
+                </div>
+
+                <div id="tenants" class="page">
+                    <div class="page-header">
+                        <h1>租户管理</h1>
+                        <p>管理系统中的所有租户，包括租户信息、用户数量限制等</p>
+                    </div>
+
+                    <!-- 搜索栏 -->
+                    <div class="sh-search-bar">
+                        <form class="sh-search-form" id="tenantSearchForm">
+                            <div class="sh-form-group">
+                                <label>租户名称</label>
+                                <input type="text" id="searchTenantName" placeholder="请输入租户名称">
+                            </div>
+                            <div class="sh-form-group">
+                                <label>租户代码</label>
+                                <input type="text" id="searchTenantCode" placeholder="请输入租户代码">
+                            </div>
+                            <div class="sh-form-group">
+                                <label>状态</label>
+                                <select id="searchTenantStatus">
+                                    <option value="">全部</option>
+                                    <option value="2">正常</option>
+                                    <option value="1">禁用</option>
+                                </select>
+                            </div>
+                            <div class="sh-search-actions">
+                                <button type="submit" class="btn btn-primary">搜索</button>
+                                <button type="button" class="btn btn-outline" onclick="resetTenantSearch()">重置</button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- 数据表格 -->
+                    <div class="sh-table-container">
+                        <div class="sh-table-header">
+                            <h3>租户列表</h3>
+                            <div class="sh-table-actions">
+                                <button class="btn btn-primary" onclick="openTenantModal()">新增租户</button>
+                            </div>
+                        </div>
+                        <div class="sh-table-wrapper">
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>租户名称</th>
+                                        <th>租户代码</th>
+                                        <th>联系人</th>
+                                        <th>联系电话</th>
+                                        <th>最大用户数</th>
+                                        <th>到期时间</th>
+                                        <th>状态</th>
+                                        <th>操作</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tenantsTableBody">
+                                    <tr>
+                                        <td colspan="9" class="text-center">
+                                            <div class="sh-empty-state">
+                                                <div class="sh-empty-state-icon">📋</div>
+                                                <div class="sh-empty-state-text">暂无数据</div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div id="tenantPagination" class="sh-pagination"></div>
                     </div>
                 </div>
 
@@ -137,6 +210,7 @@
             </main>
         </div>
     </div>
+    <script src="/static/js/components.js"></script>
     <script src="/static/js/app.js"></script>
 </body>
 </html>

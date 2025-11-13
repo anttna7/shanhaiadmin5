@@ -1,0 +1,446 @@
+/* ===================================
+   SH Admin 组件样式
+   =================================== */
+
+/* Toast 消息提示 */
+.sh-toast {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    padding: 16px 20px;
+    min-width: 300px;
+    max-width: 500px;
+    z-index: 9999;
+    opacity: 0;
+    transform: translateX(100%);
+    transition: all 0.3s ease;
+}
+
+.sh-toast-show {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.sh-toast-content {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.sh-toast-icon {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    flex-shrink: 0;
+}
+
+.sh-toast-success .sh-toast-icon {
+    background: #4caf50;
+    color: white;
+}
+
+.sh-toast-error .sh-toast-icon {
+    background: #f44336;
+    color: white;
+}
+
+.sh-toast-warning .sh-toast-icon {
+    background: #ff9800;
+    color: white;
+}
+
+.sh-toast-info .sh-toast-icon {
+    background: #2196f3;
+    color: white;
+}
+
+.sh-toast-message {
+    flex: 1;
+    color: #333;
+    font-size: 14px;
+}
+
+/* 模态框 */
+.sh-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+.sh-modal-show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.sh-modal-show .sh-modal-container {
+    transform: scale(1);
+}
+
+.sh-modal-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.sh-modal-container {
+    position: relative;
+    background: white;
+    border-radius: 12px;
+    width: 90%;
+    max-height: 90vh;
+    display: flex;
+    flex-direction: column;
+    transform: scale(0.9);
+    transition: transform 0.3s ease;
+}
+
+.sh-modal-header {
+    padding: 20px 24px;
+    border-bottom: 1px solid #e0e0e0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.sh-modal-header h3 {
+    margin: 0;
+    font-size: 18px;
+    color: #333;
+}
+
+.sh-modal-close {
+    background: none;
+    border: none;
+    font-size: 28px;
+    color: #999;
+    cursor: pointer;
+    padding: 0;
+    width: 32px;
+    height: 32px;
+    line-height: 1;
+    transition: color 0.3s;
+}
+
+.sh-modal-close:hover {
+    color: #333;
+}
+
+.sh-modal-body {
+    padding: 24px;
+    overflow-y: auto;
+    flex: 1;
+}
+
+.sh-modal-footer {
+    padding: 16px 24px;
+    border-top: 1px solid #e0e0e0;
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+}
+
+/* 模态框表单 */
+.sh-form-group {
+    margin-bottom: 20px;
+}
+
+.sh-form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: #333;
+    font-size: 14px;
+}
+
+.sh-form-group label .required {
+    color: #f44336;
+    margin-left: 4px;
+}
+
+.sh-form-group input,
+.sh-form-group select,
+.sh-form-group textarea {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 14px;
+    transition: border-color 0.3s;
+}
+
+.sh-form-group input:focus,
+.sh-form-group select:focus,
+.sh-form-group textarea:focus {
+    outline: none;
+    border-color: #667eea;
+}
+
+.sh-form-group textarea {
+    resize: vertical;
+    min-height: 80px;
+}
+
+.sh-form-group .error-message {
+    color: #f44336;
+    font-size: 12px;
+    margin-top: 4px;
+}
+
+.sh-form-group.has-error input,
+.sh-form-group.has-error select,
+.sh-form-group.has-error textarea {
+    border-color: #f44336;
+}
+
+/* Loading 加载 */
+.sh-loading {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 2000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+.sh-loading-show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.sh-loading-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.3);
+}
+
+.sh-loading-content {
+    position: relative;
+    background: white;
+    padding: 30px 40px;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+}
+
+.sh-loading-spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid #667eea;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.sh-loading-text {
+    color: #666;
+    font-size: 14px;
+}
+
+/* 分页组件 */
+.sh-pagination {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 20px;
+    padding: 16px 0;
+}
+
+.sh-page-btn {
+    min-width: 36px;
+    height: 36px;
+    padding: 0 12px;
+    border: 1px solid #ddd;
+    background: white;
+    color: #666;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.3s;
+}
+
+.sh-page-btn:hover:not([disabled]):not(.active) {
+    border-color: #667eea;
+    color: #667eea;
+}
+
+.sh-page-btn.active {
+    background: #667eea;
+    color: white;
+    border-color: #667eea;
+}
+
+.sh-page-btn[disabled] {
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+
+.sh-page-ellipsis {
+    padding: 0 8px;
+    color: #999;
+}
+
+.sh-page-info {
+    margin-left: auto;
+    color: #666;
+    font-size: 14px;
+}
+
+/* 搜索栏 */
+.sh-search-bar {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.sh-search-form {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+    align-items: end;
+}
+
+.sh-search-actions {
+    display: flex;
+    gap: 12px;
+}
+
+/* 表格增强 */
+.sh-table-container {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+.sh-table-header {
+    padding: 16px 20px;
+    border-bottom: 1px solid #e0e0e0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.sh-table-header h3 {
+    margin: 0;
+    font-size: 16px;
+    color: #333;
+}
+
+.sh-table-actions {
+    display: flex;
+    gap: 12px;
+}
+
+.sh-table-wrapper {
+    overflow-x: auto;
+}
+
+/* 空状态 */
+.sh-empty-state {
+    padding: 60px 20px;
+    text-align: center;
+    color: #999;
+}
+
+.sh-empty-state-icon {
+    font-size: 48px;
+    margin-bottom: 16px;
+}
+
+.sh-empty-state-text {
+    font-size: 14px;
+}
+
+/* 状态标签 */
+.sh-badge {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.sh-badge-success {
+    background: #e8f5e9;
+    color: #2e7d32;
+}
+
+.sh-badge-error {
+    background: #ffebee;
+    color: #c62828;
+}
+
+.sh-badge-warning {
+    background: #fff3e0;
+    color: #e65100;
+}
+
+.sh-badge-info {
+    background: #e3f2fd;
+    color: #1565c0;
+}
+
+/* 响应式 */
+@media (max-width: 768px) {
+    .sh-toast {
+        right: 10px;
+        left: 10px;
+        min-width: auto;
+    }
+
+    .sh-modal-container {
+        width: 95%;
+    }
+
+    .sh-search-form {
+        grid-template-columns: 1fr;
+    }
+
+    .sh-pagination {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .sh-page-info {
+        margin-left: 0;
+        width: 100%;
+        text-align: center;
+    }
+}
