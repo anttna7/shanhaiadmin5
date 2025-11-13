@@ -2,7 +2,7 @@ package models
 
 import (
 	"fmt"
-	"go-admin/common/global"
+	"shadmin/common/global"
 	"io/ioutil"
 	"log"
 	"strings"

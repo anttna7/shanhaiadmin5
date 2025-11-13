@@ -3,21 +3,21 @@ package migrate
 import (
 	"bytes"
 	"fmt"
-	"github.com/go-admin-team/go-admin-core/sdk"
-	"github.com/go-admin-team/go-admin-core/sdk/pkg"
+	"github.com/shadmin-team/shadmin-core/sdk"
+	"github.com/shadmin-team/shadmin-core/sdk/pkg"
 	"strconv"
 	"text/template"
 	"time"
 
-	"github.com/go-admin-team/go-admin-core/config/source/file"
+	"github.com/shadmin-team/shadmin-core/config/source/file"
 	"github.com/spf13/cobra"
 
-	"github.com/go-admin-team/go-admin-core/sdk/config"
-	"go-admin/cmd/migrate/migration"
-	_ "go-admin/cmd/migrate/migration/version"
-	_ "go-admin/cmd/migrate/migration/version-local"
-	"go-admin/common/database"
-	"go-admin/common/models"
+	"github.com/shadmin-team/shadmin-core/sdk/config"
+	"shadmin/cmd/migrate/migration"
+	_ "shadmin/cmd/migrate/migration/version"
+	_ "shadmin/cmd/migrate/migration/version-local"
+	"shadmin/common/database"
+	"shadmin/common/models"
 )
 
 var (
@@ -28,7 +28,7 @@ var (
 	StartCmd  = &cobra.Command{
 		Use:     "migrate",
 		Short:   "Initialize the database",
-		Example: "go-admin migrate -c config/settings.yml",
+		Example: "shadmin migrate -c config/settings.yml",
 		Run: func(cmd *cobra.Command, args []string) {
 			run()
 		},
@@ -39,7 +39,7 @@ var (
 func init() {
 	StartCmd.PersistentFlags().StringVarP(&configYml, "config", "c", "config/settings.yml", "Start server with provided configuration file")
 	StartCmd.PersistentFlags().BoolVarP(&generate, "generate", "g", false, "generate migration file")
-	StartCmd.PersistentFlags().BoolVarP(&goAdmin, "goAdmin", "a", false, "generate go-admin migration file")
+	StartCmd.PersistentFlags().BoolVarP(&goAdmin, "goAdmin", "a", false, "generate shadmin migration file")
 	StartCmd.PersistentFlags().StringVarP(&host, "domain", "d", "*", "select tenant host")
 }
 

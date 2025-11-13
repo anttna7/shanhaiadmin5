@@ -23,7 +23,7 @@ settings:
     enableddb: false
   jwt:
     # token 密钥，生产环境时及的修改
-    secret: go-admin
+    secret: shadmin
     # token 过期时间 单位：秒
     timeout: 3600
   database:
@@ -31,7 +31,7 @@ settings:
     # PostgreSQL 18+ 推荐配置
     driver: postgres
     # PostgreSQL 连接字符串格式: host=主机 port=端口 user=用户名 password=密码 dbname=数据库名 sslmode=disable TimeZone=Asia/Shanghai
-    source: host=127.0.0.1 port=5432 user=postgres password=postgres dbname=go_admin sslmode=disable TimeZone=Asia/Shanghai
+    source: host=127.0.0.1 port=5432 user=postgres password=postgres dbname=sh_admin sslmode=disable TimeZone=Asia/Shanghai
 #  databases:
 #    'locaohost:8000':
 #      driver: mysql
@@ -44,7 +44,7 @@ settings:
     # 代码生成读取的数据库名称
     dbname: dbname
     # 代码生成是使用前端代码存放位置，需要指定到src文件夹，相对路径
-    frontpath: ../go-admin-ui/src
+    frontpath: ../shadmin-ui/src
   extend: # 扩展项使用说明
     demo:
       name: data

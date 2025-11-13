@@ -8,12 +8,12 @@ import (
 	"strings"
 
 	"github.com/gin-gonic/gin"
-	"github.com/go-admin-team/go-admin-core/sdk/api"
-	"github.com/go-admin-team/go-admin-core/sdk/pkg"
-	"github.com/go-admin-team/go-admin-core/sdk/pkg/utils"
+	"github.com/shadmin-team/shadmin-core/sdk/api"
+	"github.com/shadmin-team/shadmin-core/sdk/pkg"
+	"github.com/shadmin-team/shadmin-core/sdk/pkg/utils"
 	"github.com/google/uuid"
 
-	"go-admin/common/file_store"
+	"shadmin/common/file_store"
 )
 
 type FileResponse struct {

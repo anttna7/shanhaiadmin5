@@ -1,8 +1,8 @@
 package dto
 
 import (
-	"go-admin/app/admin/models"
-	common "go-admin/common/models"
+	"shadmin/app/admin/models"
+	common "shadmin/common/models"
 )
 
 // SysDeptGetPageReq 列表或者搜索使用结构体

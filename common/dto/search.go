@@ -1,8 +1,8 @@
 package dto
 
 import (
-	"github.com/go-admin-team/go-admin-core/tools/search"
-	"go-admin/common/global"
+	"github.com/shadmin-team/shadmin-core/tools/search"
+	"shadmin/common/global"
 	"gorm.io/gorm"
 )
 

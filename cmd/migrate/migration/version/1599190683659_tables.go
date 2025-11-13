@@ -1,12 +1,12 @@
 package version
 
 import (
-	"github.com/go-admin-team/go-admin-core/sdk/config"
+	"github.com/shadmin-team/shadmin-core/sdk/config"
 	"runtime"
 
-	"go-admin/cmd/migrate/migration"
-	"go-admin/cmd/migrate/migration/models"
-	common "go-admin/common/models"
+	"shadmin/cmd/migrate/migration"
+	"shadmin/cmd/migrate/migration/models"
+	common "shadmin/common/models"
 
 	"gorm.io/gorm"
 )

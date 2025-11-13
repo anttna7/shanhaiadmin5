@@ -2,15 +2,15 @@ package service
 
 import (
 	"errors"
-	"go-admin/app/admin/models"
+	"shadmin/app/admin/models"
 
-	log "github.com/go-admin-team/go-admin-core/logger"
-	"github.com/go-admin-team/go-admin-core/sdk/pkg"
+	log "github.com/shadmin-team/shadmin-core/logger"
+	"github.com/shadmin-team/shadmin-core/sdk/pkg"
 
-	"go-admin/app/admin/service/dto"
-	cDto "go-admin/common/dto"
+	"shadmin/app/admin/service/dto"
+	cDto "shadmin/common/dto"
 
-	"github.com/go-admin-team/go-admin-core/sdk/service"
+	"github.com/shadmin-team/shadmin-core/sdk/service"
 )
 
 type SysDept struct {

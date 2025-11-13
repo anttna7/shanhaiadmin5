@@ -2,16 +2,16 @@ package service
 
 import (
 	"errors"
-	"go-admin/app/admin/models"
-	"go-admin/app/admin/service/dto"
+	"shadmin/app/admin/models"
+	"shadmin/app/admin/service/dto"
 
-	log "github.com/go-admin-team/go-admin-core/logger"
-	"github.com/go-admin-team/go-admin-core/sdk/pkg"
-	"github.com/go-admin-team/go-admin-core/sdk/service"
+	log "github.com/shadmin-team/shadmin-core/logger"
+	"github.com/shadmin-team/shadmin-core/sdk/pkg"
+	"github.com/shadmin-team/shadmin-core/sdk/service"
 	"gorm.io/gorm"
 
-	"go-admin/common/actions"
-	cDto "go-admin/common/dto"
+	"shadmin/common/actions"
+	cDto "shadmin/common/dto"
 )
 
 type SysUser struct {

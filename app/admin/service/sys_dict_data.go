@@ -3,12 +3,12 @@ package service
 import (
 	"errors"
 
-	"github.com/go-admin-team/go-admin-core/sdk/service"
+	"github.com/shadmin-team/shadmin-core/sdk/service"
 	"gorm.io/gorm"
 
-	"go-admin/app/admin/models"
-	"go-admin/app/admin/service/dto"
-	cDto "go-admin/common/dto"
+	"shadmin/app/admin/models"
+	"shadmin/app/admin/service/dto"
+	cDto "shadmin/common/dto"
 )
 
 type SysDictData struct {

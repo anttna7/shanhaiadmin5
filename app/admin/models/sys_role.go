@@ -1,6 +1,6 @@
 package models
 
-import "go-admin/common/models"
+import "shadmin/common/models"
 
 type SysRole struct {
 	RoleId    int        `json:"roleId" gorm:"primaryKey;autoIncrement"` // 角色编码

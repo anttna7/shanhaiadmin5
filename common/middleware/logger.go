@@ -4,8 +4,8 @@ import (
 	"bufio"
 	"bytes"
 	"encoding/json"
-	"go-admin/app/admin/service/dto"
-	"go-admin/common"
+	"shadmin/app/admin/service/dto"
+	"shadmin/common"
 	"io"
 	"io/ioutil"
 	"net/http"
@@ -13,12 +13,12 @@ import (
 	"time"
 
 	"github.com/gin-gonic/gin"
-	"github.com/go-admin-team/go-admin-core/sdk"
-	"github.com/go-admin-team/go-admin-core/sdk/api"
-	"github.com/go-admin-team/go-admin-core/sdk/config"
-	"github.com/go-admin-team/go-admin-core/sdk/pkg/jwtauth/user"
+	"github.com/shadmin-team/shadmin-core/sdk"
+	"github.com/shadmin-team/shadmin-core/sdk/api"
+	"github.com/shadmin-team/shadmin-core/sdk/config"
+	"github.com/shadmin-team/shadmin-core/sdk/pkg/jwtauth/user"
 
-	"go-admin/common/global"
+	"shadmin/common/global"
 )
 
 // LoggerToFile 日志记录到文件

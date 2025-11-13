@@ -3,12 +3,12 @@ package apis
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/gin-gonic/gin/binding"
-	"github.com/go-admin-team/go-admin-core/sdk/api"
-	"github.com/go-admin-team/go-admin-core/sdk/pkg/jwtauth/user"
+	"github.com/shadmin-team/shadmin-core/sdk/api"
+	"github.com/shadmin-team/shadmin-core/sdk/pkg/jwtauth/user"
 
-	"go-admin/app/admin/models"
-	"go-admin/app/admin/service"
-	"go-admin/app/admin/service/dto"
+	"shadmin/app/admin/models"
+	"shadmin/app/admin/service"
+	"shadmin/app/admin/service/dto"
 )
 
 type SysConfig struct {

@@ -1,7 +1,7 @@
 package test
 
 import (
-	//"go-admin/models/tools"
+	//"shadmin/models/tools"
 	//"os"
 	"testing"
 	//"text/template"

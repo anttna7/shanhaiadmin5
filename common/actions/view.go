@@ -2,16 +2,16 @@ package actions
 
 import (
 	"errors"
-	"github.com/go-admin-team/go-admin-core/sdk/pkg/response"
+	"github.com/shadmin-team/shadmin-core/sdk/pkg/response"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-	log "github.com/go-admin-team/go-admin-core/logger"
-	"github.com/go-admin-team/go-admin-core/sdk/pkg"
+	log "github.com/shadmin-team/shadmin-core/logger"
+	"github.com/shadmin-team/shadmin-core/sdk/pkg"
 	"gorm.io/gorm"
 
-	"go-admin/common/dto"
-	"go-admin/common/models"
+	"shadmin/common/dto"
+	"shadmin/common/models"
 )
 
 // ViewAction 通用详情动作

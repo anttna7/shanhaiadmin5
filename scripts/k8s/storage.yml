@@ -1,8 +1,8 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: go-admin
-  namespace: go-admin
+  name: shadmin
+  namespace: shadmin
 spec:
   accessModes:
     - ReadWriteMany

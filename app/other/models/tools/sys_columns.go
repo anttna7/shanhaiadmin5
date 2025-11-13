@@ -1,7 +1,7 @@
 package tools
 
 import (
-	common "go-admin/common/models"
+	common "shadmin/common/models"
 
 	"gorm.io/gorm"
 )

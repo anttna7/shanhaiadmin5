@@ -4,13 +4,13 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/go-admin-team/go-admin-core/sdk/runtime"
-	"github.com/go-admin-team/go-admin-core/sdk/service"
-	"go-admin/app/admin/models"
-	"go-admin/app/admin/service/dto"
-	"go-admin/common/actions"
-	cDto "go-admin/common/dto"
-	"go-admin/common/global"
+	"github.com/shadmin-team/shadmin-core/sdk/runtime"
+	"github.com/shadmin-team/shadmin-core/sdk/service"
+	"shadmin/app/admin/models"
+	"shadmin/app/admin/service/dto"
+	"shadmin/common/actions"
+	cDto "shadmin/common/dto"
+	"shadmin/common/global"
 )
 
 type SysApi struct {

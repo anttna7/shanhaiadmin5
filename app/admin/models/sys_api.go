@@ -9,11 +9,11 @@ import (
 	"strings"
 
 	"github.com/bitly/go-simplejson"
-	"github.com/go-admin-team/go-admin-core/sdk"
-	"github.com/go-admin-team/go-admin-core/sdk/runtime"
-	"github.com/go-admin-team/go-admin-core/storage"
+	"github.com/shadmin-team/shadmin-core/sdk"
+	"github.com/shadmin-team/shadmin-core/sdk/runtime"
+	"github.com/shadmin-team/shadmin-core/storage"
 
-	"go-admin/common/models"
+	"shadmin/common/models"
 )
 
 type SysApi struct {

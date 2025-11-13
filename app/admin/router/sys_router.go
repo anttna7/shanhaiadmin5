@@ -1,21 +1,21 @@
 package router
 
 import (
-	"go-admin/app/admin/apis"
+	"shadmin/app/admin/apis"
 	"mime"
 
-	"github.com/go-admin-team/go-admin-core/sdk/config"
+	"github.com/shadmin-team/shadmin-core/sdk/config"
 
 	"github.com/gin-gonic/gin"
-	jwt "github.com/go-admin-team/go-admin-core/sdk/pkg/jwtauth"
-	"github.com/go-admin-team/go-admin-core/sdk/pkg/ws"
+	jwt "github.com/shadmin-team/shadmin-core/sdk/pkg/jwtauth"
+	"github.com/shadmin-team/shadmin-core/sdk/pkg/ws"
 	ginSwagger "github.com/swaggo/gin-swagger"
 
 	swaggerfiles "github.com/swaggo/files"
 
-	"go-admin/common/middleware"
-	"go-admin/common/middleware/handler"
-	_ "go-admin/docs/admin"
+	"shadmin/common/middleware"
+	"shadmin/common/middleware/handler"
+	_ "shadmin/docs/admin"
 )
 
 func InitSysRouter(r *gin.Engine, authMiddleware *jwt.GinJWTMiddleware) *gin.RouterGroup {

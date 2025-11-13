@@ -4,11 +4,11 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-	"github.com/go-admin-team/go-admin-core/sdk"
-	"github.com/go-admin-team/go-admin-core/sdk/api"
+	"github.com/shadmin-team/shadmin-core/sdk"
+	"github.com/shadmin-team/shadmin-core/sdk/api"
 
-	"go-admin/app/jobs/service"
-	"go-admin/common/dto"
+	"shadmin/app/jobs/service"
+	"shadmin/common/dto"
 )
 
 type SysJob struct {

@@ -10,12 +10,12 @@ settings:
     writertimeout: 20000
   database:
     driver: sqlite3
-    source: ./go-admin-db.db
+    source: ./shadmin-db.db
   gen:
     dbname: testhhh
-    frontpath: ../go-admin-ui/src
+    frontpath: ../shadmin-ui/src
   jwt:
-    secret: go-admin
+    secret: shadmin
     timeout: 3600
   logger:
     # 日志存放路径

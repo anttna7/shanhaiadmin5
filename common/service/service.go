@@ -3,7 +3,7 @@ package service
 import (
 	"fmt"
 
-	"github.com/go-admin-team/go-admin-core/logger"
+	"github.com/shadmin-team/shadmin-core/logger"
 	"gorm.io/gorm"
 )
 

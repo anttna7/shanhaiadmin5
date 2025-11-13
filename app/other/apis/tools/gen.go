@@ -3,19 +3,19 @@ package tools
 import (
 	"bytes"
 	"fmt"
-	"go-admin/app/admin/service"
-	"go-admin/app/admin/service/dto"
+	"shadmin/app/admin/service"
+	"shadmin/app/admin/service/dto"
 	"strconv"
 	"strings"
 	"text/template"
 	"time"
 
 	"github.com/gin-gonic/gin"
-	"github.com/go-admin-team/go-admin-core/sdk/api"
-	"github.com/go-admin-team/go-admin-core/sdk/config"
-	"github.com/go-admin-team/go-admin-core/sdk/pkg"
+	"github.com/shadmin-team/shadmin-core/sdk/api"
+	"github.com/shadmin-team/shadmin-core/sdk/config"
+	"github.com/shadmin-team/shadmin-core/sdk/pkg"
 
-	"go-admin/app/other/models/tools"
+	"shadmin/app/other/models/tools"
 )
 
 type Gen struct {

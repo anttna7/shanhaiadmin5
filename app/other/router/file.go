@@ -2,8 +2,8 @@ package router
 
 import (
 	"github.com/gin-gonic/gin"
-	jwt "github.com/go-admin-team/go-admin-core/sdk/pkg/jwtauth"
-	"go-admin/app/other/apis"
+	jwt "github.com/shadmin-team/shadmin-core/sdk/pkg/jwtauth"
+	"shadmin/app/other/apis"
 )
 
 func init() {

@@ -9,7 +9,7 @@ const INDEX = `
 <html>
 <head>
 <meta charset="utf-8">
-<title>GO-ADMIN欢迎您</title>
+<title>SHADMIN欢迎您</title>
 <style>
 body{
   margin:0; 
@@ -28,7 +28,7 @@ $(function(){
 </script>
 </head>
 <body>
-<iframe id="iframe" frameborder="0" src="https://www.go-admin.pro" style="width:100%;"></iframe>
+<iframe id="iframe" frameborder="0" src="https://www.shadmin.pro" style="width:100%;"></iframe>
 </body>
 </html>
 `

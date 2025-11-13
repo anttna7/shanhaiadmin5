@@ -1,6 +1,6 @@
 package models
 
-import "go-admin/common/models"
+import "shadmin/common/models"
 
 type SysDept struct {
 	DeptId   int    `json:"deptId" gorm:"primaryKey;autoIncrement;"` //部门编码

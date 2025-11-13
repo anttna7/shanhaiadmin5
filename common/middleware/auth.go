@@ -3,9 +3,9 @@ package middleware
 import (
 	"time"
 
-	"github.com/go-admin-team/go-admin-core/sdk/config"
-	jwt "github.com/go-admin-team/go-admin-core/sdk/pkg/jwtauth"
-	"go-admin/common/middleware/handler"
+	"github.com/shadmin-team/shadmin-core/sdk/config"
+	jwt "github.com/shadmin-team/shadmin-core/sdk/pkg/jwtauth"
+	"shadmin/common/middleware/handler"
 )
 
 // AuthInit jwt验证new

@@ -3,9 +3,9 @@ package dto
 import (
 	"time"
 
-	"go-admin/app/admin/models"
-	"go-admin/common/dto"
-	common "go-admin/common/models"
+	"shadmin/app/admin/models"
+	"shadmin/common/dto"
+	common "shadmin/common/models"
 )
 
 const (

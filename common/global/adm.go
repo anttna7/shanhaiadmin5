@@ -1,7 +1,7 @@
 package global
 
 const (
-	// Version go-admin version info
+	// Version shadmin version info
 	Version = "2.2.0"
 )
 

@@ -1,6 +1,6 @@
 package models
 
-import "go-admin/common/models"
+import "shadmin/common/models"
 
 type SysMenu struct {
 	MenuId     int       `json:"menuId" gorm:"primaryKey;autoIncrement"`

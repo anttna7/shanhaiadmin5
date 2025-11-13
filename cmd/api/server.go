@@ -9,24 +9,24 @@ import (
 	"time"
 
 	"github.com/gin-gonic/gin"
-	"github.com/go-admin-team/go-admin-core/config/source/file"
-	log "github.com/go-admin-team/go-admin-core/logger"
-	"github.com/go-admin-team/go-admin-core/sdk"
-	"github.com/go-admin-team/go-admin-core/sdk/api"
-	"github.com/go-admin-team/go-admin-core/sdk/config"
-	"github.com/go-admin-team/go-admin-core/sdk/pkg"
+	"github.com/shadmin-team/shadmin-core/config/source/file"
+	log "github.com/shadmin-team/shadmin-core/logger"
+	"github.com/shadmin-team/shadmin-core/sdk"
+	"github.com/shadmin-team/shadmin-core/sdk/api"
+	"github.com/shadmin-team/shadmin-core/sdk/config"
+	"github.com/shadmin-team/shadmin-core/sdk/pkg"
 	"github.com/pkg/errors"
 	"github.com/spf13/cobra"
 
-	"go-admin/app/admin/models"
-	"go-admin/app/admin/router"
-	"go-admin/app/jobs"
-	"go-admin/common/database"
-	"go-admin/common/global"
-	common "go-admin/common/middleware"
-	"go-admin/common/middleware/handler"
-	"go-admin/common/storage"
-	ext "go-admin/config"
+	"shadmin/app/admin/models"
+	"shadmin/app/admin/router"
+	"shadmin/app/jobs"
+	"shadmin/common/database"
+	"shadmin/common/global"
+	common "shadmin/common/middleware"
+	"shadmin/common/middleware/handler"
+	"shadmin/common/storage"
+	ext "shadmin/config"
 )
 
 var (
@@ -35,7 +35,7 @@ var (
 	StartCmd  = &cobra.Command{
 		Use:          "server",
 		Short:        "Start API server",
-		Example:      "go-admin server -c config/settings.yml",
+		Example:      "shadmin server -c config/settings.yml",
 		SilenceUsage: true,
 		PreRun: func(cmd *cobra.Command, args []string) {
 			setup()
@@ -157,7 +157,7 @@ func run() error {
 //var Router runtime.Router
 
 func tip() {
-	usageStr := `欢迎使用 ` + pkg.Green(`go-admin `+global.Version) + ` 可以使用 ` + pkg.Red(`-h`) + ` 查看命令`
+	usageStr := `欢迎使用 ` + pkg.Green(`shadmin `+global.Version) + ` 可以使用 ` + pkg.Red(`-h`) + ` 查看命令`
 	fmt.Printf("%s \n\n", usageStr)
 }
 

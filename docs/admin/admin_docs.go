@@ -13,7 +13,7 @@ const docTemplateadmin = `{
         "contact": {},
         "license": {
             "name": "MIT",
-            "url": "https://github.com/go-admin-team/go-admin/blob/master/LICENSE.md"
+            "url": "https://github.com/shadmin-team/shadmin/blob/master/LICENSE.md"
         },
         "version": "{{.Version}}"
     },
@@ -4362,7 +4362,7 @@ var SwaggerInfoadmin = &swag.Spec{
 	Host:             "",
 	BasePath:         "",
 	Schemes:          []string{},
-	Title:            "go-admin API",
+	Title:            "shadmin API",
 	Description:      "基于Gin + Vue + Element UI的前后端分离权限管理系统的接口文档\n添加qq群: 521386980 进入技术交流群 请先star，谢谢！",
 	InfoInstanceName: "admin",
 	SwaggerTemplate:  docTemplateadmin,

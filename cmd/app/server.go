@@ -4,8 +4,8 @@ import (
 	"bytes"
 	"errors"
 	"fmt"
-	"github.com/go-admin-team/go-admin-core/sdk/pkg"
-	"github.com/go-admin-team/go-admin-core/sdk/pkg/utils"
+	"github.com/shadmin-team/shadmin-core/sdk/pkg"
+	"github.com/shadmin-team/shadmin-core/sdk/pkg/utils"
 	"github.com/spf13/cobra"
 	"text/template"
 )
@@ -16,7 +16,7 @@ var (
 		Use:     "app",
 		Short:   "Create a new app",
 		Long:    "Use when you need to create a new app",
-		Example: "go-admin app -n admin",
+		Example: "shadmin app -n admin",
 		Run: func(cmd *cobra.Command, args []string) {
 			run()
 		},

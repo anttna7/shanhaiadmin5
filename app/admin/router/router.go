@@ -3,8 +3,8 @@ package router
 import (
 	"github.com/gin-gonic/gin"
 	_ "github.com/gin-gonic/gin"
-	"github.com/go-admin-team/go-admin-core/sdk/pkg/jwtauth"
-	jwt "github.com/go-admin-team/go-admin-core/sdk/pkg/jwtauth"
+	"github.com/shadmin-team/shadmin-core/sdk/pkg/jwtauth"
+	jwt "github.com/shadmin-team/shadmin-core/sdk/pkg/jwtauth"
 )
 
 var (

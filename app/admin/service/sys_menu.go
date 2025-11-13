@@ -5,16 +5,16 @@ import (
 	"sort"
 	"strings"
 
-	"github.com/go-admin-team/go-admin-core/sdk/pkg"
+	"github.com/shadmin-team/shadmin-core/sdk/pkg"
 	"github.com/pkg/errors"
 	"gorm.io/gorm"
 
-	"go-admin/app/admin/models"
-	"go-admin/app/admin/service/dto"
-	cDto "go-admin/common/dto"
-	cModels "go-admin/common/models"
+	"shadmin/app/admin/models"
+	"shadmin/app/admin/service/dto"
+	cDto "shadmin/common/dto"
+	cModels "shadmin/common/models"
 
-	"github.com/go-admin-team/go-admin-core/sdk/service"
+	"github.com/shadmin-team/shadmin-core/sdk/service"
 )
 
 type SysMenu struct {

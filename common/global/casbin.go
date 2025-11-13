@@ -3,8 +3,8 @@ package global
 import (
 	"github.com/casbin/casbin/v2"
 	"github.com/gin-gonic/gin"
-	"github.com/go-admin-team/go-admin-core/sdk"
-	"github.com/go-admin-team/go-admin-core/sdk/api"
+	"github.com/shadmin-team/shadmin-core/sdk"
+	"github.com/shadmin-team/shadmin-core/sdk/api"
 )
 
 func LoadPolicy(c *gin.Context) (*casbin.SyncedEnforcer, error) {

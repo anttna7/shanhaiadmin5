@@ -1,10 +1,10 @@
 package dto
 
 import (
-	"go-admin/app/admin/models"
+	"shadmin/app/admin/models"
 
-	"go-admin/common/dto"
-	common "go-admin/common/models"
+	"shadmin/common/dto"
+	common "shadmin/common/models"
 )
 
 type SysUserGetPageReq struct {

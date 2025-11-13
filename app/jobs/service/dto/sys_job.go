@@ -2,11 +2,11 @@ package dto
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/go-admin-team/go-admin-core/sdk/api"
-	"go-admin/app/jobs/models"
+	"github.com/shadmin-team/shadmin-core/sdk/api"
+	"shadmin/app/jobs/models"
 
-	"go-admin/common/dto"
-	common "go-admin/common/models"
+	"shadmin/common/dto"
+	common "shadmin/common/models"
 )
 
 type SysJobSearch struct {

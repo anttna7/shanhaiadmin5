@@ -6,13 +6,13 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/gin-gonic/gin/binding"
-	"github.com/go-admin-team/go-admin-core/logger"
-	"github.com/go-admin-team/go-admin-core/sdk/api"
-	"github.com/go-admin-team/go-admin-core/sdk/pkg"
-	"github.com/go-admin-team/go-admin-core/sdk/pkg/response"
+	"github.com/shadmin-team/shadmin-core/logger"
+	"github.com/shadmin-team/shadmin-core/sdk/api"
+	"github.com/shadmin-team/shadmin-core/sdk/pkg"
+	"github.com/shadmin-team/shadmin-core/sdk/pkg/response"
 	"gorm.io/gorm"
 
-	"go-admin/common/service"
+	"shadmin/common/service"
 )
 
 type Api struct {

@@ -4,10 +4,10 @@ import (
 	"encoding/json"
 	"fmt"
 
-	"github.com/go-admin-team/go-admin-core/config/source/file"
+	"github.com/shadmin-team/shadmin-core/config/source/file"
 	"github.com/spf13/cobra"
 
-	"github.com/go-admin-team/go-admin-core/sdk/config"
+	"github.com/shadmin-team/shadmin-core/sdk/config"
 )
 
 var (
@@ -15,7 +15,7 @@ var (
 	StartCmd  = &cobra.Command{
 		Use:     "config",
 		Short:   "Get Application config info",
-		Example: "go-admin config -c config/settings.yml",
+		Example: "shadmin config -c config/settings.yml",
 		Run: func(cmd *cobra.Command, args []string) {
 			run()
 		},

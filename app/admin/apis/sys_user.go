@@ -2,19 +2,19 @@ package apis
 
 import (
 	"github.com/gin-gonic/gin/binding"
-	"go-admin/app/admin/models"
+	"shadmin/app/admin/models"
 	"golang.org/x/crypto/bcrypt"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-	"github.com/go-admin-team/go-admin-core/sdk/api"
-	"github.com/go-admin-team/go-admin-core/sdk/pkg/jwtauth/user"
-	_ "github.com/go-admin-team/go-admin-core/sdk/pkg/response"
+	"github.com/shadmin-team/shadmin-core/sdk/api"
+	"github.com/shadmin-team/shadmin-core/sdk/pkg/jwtauth/user"
+	_ "github.com/shadmin-team/shadmin-core/sdk/pkg/response"
 	"github.com/google/uuid"
 
-	"go-admin/app/admin/service"
-	"go-admin/app/admin/service/dto"
-	"go-admin/common/actions"
+	"shadmin/app/admin/service"
+	"shadmin/app/admin/service/dto"
+	"shadmin/common/actions"
 )
 
 type SysUser struct {

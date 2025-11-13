@@ -3,11 +3,11 @@ package apis
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/gin-gonic/gin/binding"
-	"github.com/go-admin-team/go-admin-core/sdk/api"
-	"go-admin/app/admin/models"
+	"github.com/shadmin-team/shadmin-core/sdk/api"
+	"shadmin/app/admin/models"
 
-	"go-admin/app/admin/service"
-	"go-admin/app/admin/service/dto"
+	"shadmin/app/admin/service"
+	"shadmin/app/admin/service/dto"
 )
 
 type SysLoginLog struct {

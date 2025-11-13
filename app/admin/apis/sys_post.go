@@ -5,13 +5,13 @@ import (
 	
 	"github.com/gin-gonic/gin"
 	"github.com/gin-gonic/gin/binding"
-	"github.com/go-admin-team/go-admin-core/sdk/api"
-	"github.com/go-admin-team/go-admin-core/sdk/pkg/jwtauth/user"
-	_ "github.com/go-admin-team/go-admin-core/sdk/pkg/response"
+	"github.com/shadmin-team/shadmin-core/sdk/api"
+	"github.com/shadmin-team/shadmin-core/sdk/pkg/jwtauth/user"
+	_ "github.com/shadmin-team/shadmin-core/sdk/pkg/response"
 
-	"go-admin/app/admin/models"
-	"go-admin/app/admin/service"
-	"go-admin/app/admin/service/dto"
+	"shadmin/app/admin/models"
+	"shadmin/app/admin/service"
+	"shadmin/app/admin/service/dto"
 )
 
 type SysPost struct {
