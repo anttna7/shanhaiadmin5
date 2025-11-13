@@ -1,6 +1,6 @@
 # go-admin
 
-[English](https://github.com/anttna7/shanhaiadmin5/main/README.md) | 简体中文
+[English](https://github.com/anttna7/shadmin5/main/README.md) | 简体中文
 
 ## 技术栈更新版本
 

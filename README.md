@@ -1,9 +1,9 @@
 
-# shanhaiadmin
+# shadmin
 
 
 
-English | [简体中文](https://github.com/antna7/shanhaiadmin5/main/README.Zh-cn.md)
+English | [简体中文](https://github.com/antna7/shadmin5/main/README.Zh-cn.md)
 
 ## 技术栈更新版本
 
@@ -215,7 +215,7 @@ env GOOS=linux GOARCH=amd64 go build main.go
 ### 项目结构
 
 ```
-shanhaiadmin/
+shadmin/
 ├── app/              # 应用层
 │   ├── admin/       # 管理后台模块
 │   ├── jobs/        # 定时任务模块
