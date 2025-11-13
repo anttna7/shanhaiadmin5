@@ -38,9 +38,13 @@ func sysBaseRouter(r *gin.RouterGroup) {
 	go ws.WebsocketManager.SendService()
 	go ws.WebsocketManager.SendAllService()
 
-	if config.ApplicationConfig.Mode != "prod" {
-		r.GET("/", apis.GoAdmin)
-	}
+	// 单体架构：直接提供 HTML 页面
+	r.GET("/", func(c *gin.Context) {
+		c.Redirect(302, "/static/html/index.html")
+	})
+	r.GET("/login", func(c *gin.Context) {
+		c.Redirect(302, "/static/html/login.html")
+	})
 	r.GET("/info", handler.Ping)
 }
 

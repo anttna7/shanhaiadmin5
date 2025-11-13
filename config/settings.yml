@@ -28,10 +28,10 @@ settings:
     timeout: 3600
   database:
     # 数据库类型 mysql, sqlite3, postgres, sqlserver
-    # sqlserver: sqlserver://用户名:密码@地址?database=数据库名
-    driver: mysql
-    # 数据库连接字符串 mysql 缺省信息 charset=utf8&parseTime=True&loc=Local&timeout=1000ms
-    source: user:password@tcp(127.0.0.1:3306)/dbname?charset=utf8&parseTime=True&loc=Local&timeout=1000ms
+    # PostgreSQL 18+ 推荐配置
+    driver: postgres
+    # PostgreSQL 连接字符串格式: host=主机 port=端口 user=用户名 password=密码 dbname=数据库名 sslmode=disable TimeZone=Asia/Shanghai
+    source: host=127.0.0.1 port=5432 user=postgres password=postgres dbname=go_admin sslmode=disable TimeZone=Asia/Shanghai
 #  databases:
 #    'locaohost:8000':
 #      driver: mysql

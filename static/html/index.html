@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Go Admin - 管理后台</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <aside class="sidebar">
+            <div class="logo">
+                <h2>Go Admin</h2>
+            </div>
+            <nav class="menu">
+                <ul>
+                    <li><a href="#dashboard" class="active">仪表板</a></li>
+                    <li><a href="#users">用户管理</a></li>
+                    <li><a href="#roles">角色管理</a></li>
+                    <li><a href="#departments">部门管理</a></li>
+                    <li><a href="#menus">菜单管理</a></li>
+                    <li><a href="#dict">字典管理</a></li>
+                    <li><a href="#config">系统配置</a></li>
+                    <li><a href="#logs">操作日志</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <div class="main-content">
+            <header class="header">
+                <div class="header-left">
+                    <h3>欢迎使用 Go Admin 管理系统</h3>
+                </div>
+                <div class="header-right">
+                    <span id="username">管理员</span>
+                    <button id="logoutBtn" class="btn-secondary">退出登录</button>
+                </div>
+            </header>
+
+            <main class="content">
+                <div id="dashboard" class="page active">
+                    <h2>系统概览</h2>
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <h3>用户总数</h3>
+                            <p class="stat-number" id="totalUsers">0</p>
+                        </div>
+                        <div class="stat-card">
+                            <h3>角色总数</h3>
+                            <p class="stat-number" id="totalRoles">0</p>
+                        </div>
+                        <div class="stat-card">
+                            <h3>部门总数</h3>
+                            <p class="stat-number" id="totalDepts">0</p>
+                        </div>
+                        <div class="stat-card">
+                            <h3>在线用户</h3>
+                            <p class="stat-number" id="onlineUsers">0</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="users" class="page">
+                    <h2>用户管理</h2>
+                    <div class="table-actions">
+                        <button class="btn-primary" onclick="addUser()">新增用户</button>
+                    </div>
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>用户名</th>
+                                <th>姓名</th>
+                                <th>邮箱</th>
+                                <th>状态</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody id="usersTableBody">
+                            <tr>
+                                <td colspan="6">加载中...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div id="roles" class="page">
+                    <h2>角色管理</h2>
+                    <div class="table-actions">
+                        <button class="btn-primary" onclick="addRole()">新增角色</button>
+                    </div>
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>角色名称</th>
+                                <th>角色标识</th>
+                                <th>状态</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody id="rolesTableBody">
+                            <tr>
+                                <td colspan="5">加载中...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div id="departments" class="page">
+                    <h2>部门管理</h2>
+                    <div class="table-actions">
+                        <button class="btn-primary" onclick="addDept()">新增部门</button>
+                    </div>
+                    <div id="deptTree">部门树加载中...</div>
+                </div>
+
+                <div id="menus" class="page">
+                    <h2>菜单管理</h2>
+                    <p>菜单管理功能</p>
+                </div>
+
+                <div id="dict" class="page">
+                    <h2>字典管理</h2>
+                    <p>字典管理功能</p>
+                </div>
+
+                <div id="config" class="page">
+                    <h2>系统配置</h2>
+                    <p>系统配置功能</p>
+                </div>
+
+                <div id="logs" class="page">
+                    <h2>操作日志</h2>
+                    <p>操作日志功能</p>
+                </div>
+            </main>
+        </div>
+    </div>
+    <script src="/static/js/app.js"></script>
+</body>
+</html>

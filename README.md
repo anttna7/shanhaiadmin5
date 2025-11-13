@@ -10,7 +10,26 @@
 
 English | [简体中文](https://github.com/go-admin-team/go-admin/blob/master/README.Zh-cn.md)
 
-The front-end and back-end separation authority management system based on Gin + Vue + Element UI OR Arco Design is extremely simple to initialize the system. You only need to modify the database connection in the configuration file. The system supports multi-instruction operations. Migration instructions can make it easier to initialize database information. Service instructions It's easy to start the api service.
+## 技术栈更新版本
+
+基于 **Go 1.25+**、**Gin 1.11+**、**PostgreSQL 18+** 和 **纯 HTML 5** 的单体架构权限管理系统。
+
+### 核心技术栈
+
+- **后端框架**: Gin 1.11+
+- **编程语言**: Go 1.25+
+- **数据库**: PostgreSQL 18+
+- **前端技术**: 纯 HTML 5 + CSS 3 + JavaScript (ES6+)
+- **架构模式**: 单体架构（Monolithic Architecture）
+
+### 架构特点
+
+本版本采用单体架构设计，前后端整合在同一应用中，具有以下特点：
+
+- 部署简单，只需一个应用实例
+- 开发效率高，无需维护多个项目
+- 资源消耗少，适合中小型项目
+- 易于调试和维护
 
 [documentation](https://www.go-admin.dev)
 
@@ -73,9 +92,13 @@ antd demo：[https://antd.go-admin.pro](https://antd.go-admin.pro/)
 
 ## Ready to work
 
-You need to install locally [go] [gin] [node](http://nodejs.org/) 和 [git](https://git-scm.com/)
+### 环境要求
 
-At the same time, a series of tutorials including videos and documents are provided. How to complete the downloading to the proficient use, it is strongly recommended that you read these tutorials before you practice this project! ! !
+- **Go**: 1.25 或更高版本
+- **PostgreSQL**: 18 或更高版本
+- **Git**: 用于代码管理
+
+注意：本版本采用单体架构，前端使用纯 HTML 5，无需安装 Node.js 和 npm。
 
 ### Easily implement go-admin to write the first application-documentation tutorial
 
@@ -103,60 +126,68 @@ At the same time, a series of tutorials including videos and documents are provi
 
 **If you have any questions, please read the above-mentioned usage documents and articles first. If you are not satisfied, welcome to issue and pr. Video tutorials and documents are being updated continuously.**
 
-## 📦 Local development
+## 📦 本地开发
 
-### Environmental requirements
+### 环境要求
 
-go 1.18
+- Go 1.25+
+- PostgreSQL 18+
 
-nodejs: v14.16.0
-
-npm: 6.14.11
-
-### Development directory creation
+### 获取代码
 
 ```bash
-
-# Create a development directory
-mkdir goadmin
-cd goadmin
-```
-
-### Get the code
-
-> Important note: the two projects must be placed in the same folder;
-
-```bash
-# Get backend code
+# 克隆项目
 git clone https://github.com/go-admin-team/go-admin.git
-
-# Get the front-end code
-git clone https://github.com/go-admin-team/go-admin-ui.git
-
+cd go-admin
 ```
 
-### Startup instructions
+注意：本版本为单体架构，前端页面已集成在项目中，无需单独克隆前端项目。
 
-#### Server startup instructions
+### 启动说明
+
+#### 配置数据库
+
+1. 安装 PostgreSQL 18+
+2. 创建数据库：
 
 ```bash
-# Enter the go-admin backend project
-cd ./go-admin
+# 登录 PostgreSQL
+psql -U postgres
 
-# Update dependencies
+# 创建数据库
+CREATE DATABASE go_admin;
+
+# 退出
+\q
+```
+
+3. 修改配置文件 `config/settings.yml`：
+
+```yaml
+database:
+  driver: postgres
+  source: host=127.0.0.1 port=5432 user=postgres password=你的密码 dbname=go_admin sslmode=disable TimeZone=Asia/Shanghai
+```
+
+#### 编译和运行
+
+```bash
+# 更新依赖
 go mod tidy
 
-# Compile the project
+# 编译项目
 go build
 
-# Change setting 
-# File path go-admin/config/settings.yml
-vi ./config/settings.yml
+# 初始化数据库（首次运行）
+./go-admin migrate -c config/settings.yml
 
-# 1. Modify the database information in the configuration file
-# Note: The corresponding configuration data under settings.database
-# 2. Confirm the log path
+# 启动服务
+./go-admin server -c config/settings.yml
 ```
+
+服务启动后，访问 http://localhost:8000 即可看到登录页面。
+
+默认账号密码：admin / 123456
 
 :::tip ⚠️Note that this problem will occur if CGO is not installed in the windows10+ environment;
 
@@ -226,14 +257,22 @@ env GOOS=windows GOARCH=amd64 go build main.go
 env GOOS=linux GOARCH=amd64 go build main.go
 ```
 
-### UI interactive terminal startup instructions
+### 项目结构
 
-```bash
-# Installation dependencies
-npm install   # or cnpm install
-
-# Start service
-npm run dev
+```
+go-admin/
+├── app/              # 应用层
+│   ├── admin/       # 管理后台模块
+│   ├── jobs/        # 定时任务模块
+│   └── other/       # 其他模块
+├── cmd/             # 命令行工具
+├── common/          # 公共组件
+├── config/          # 配置文件
+├── static/          # 静态资源（前端页面）
+│   ├── html/       # HTML 页面
+│   ├── css/        # 样式文件
+│   └── js/         # JavaScript 文件
+└── docs/            # 文档
 ```
 
 ## 📨 Interactive

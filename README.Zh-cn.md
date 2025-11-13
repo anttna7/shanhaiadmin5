@@ -9,7 +9,26 @@
 
 [English](https://github.com/go-admin-team/go-admin/blob/master/README.md) | 简体中文
 
-基于Gin + Vue + Element UI OR Arco Design OR Ant Design的前后端分离权限管理系统,系统初始化极度简单，只需要配置文件中，修改数据库连接，系统支持多指令操作，迁移指令可以让初始化数据库信息变得更简单，服务指令可以很简单的启动api服务
+## 技术栈更新版本
+
+基于 **Go 1.25+**、**Gin 1.11+**、**PostgreSQL 18+** 和 **纯 HTML 5** 的单体架构权限管理系统。
+
+### 核心技术栈
+
+- **后端框架**: Gin 1.11+
+- **编程语言**: Go 1.25+
+- **数据库**: PostgreSQL 18+
+- **前端技术**: 纯 HTML 5 + CSS 3 + JavaScript (ES6+)
+- **架构模式**: 单体架构（Monolithic Architecture）
+
+### 架构特点
+
+本版本采用单体架构设计，前后端整合在同一应用中，具有以下特点：
+
+- 部署简单，只需一个应用实例
+- 开发效率高，无需维护多个项目
+- 资源消耗少，适合中小型项目
+- 易于调试和维护
 
 [在线文档](https://www.go-admin.pro)
 
