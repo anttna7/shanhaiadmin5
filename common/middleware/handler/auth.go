@@ -29,6 +29,8 @@ func PayloadFunc(data interface{}) jwt.MapClaims {
 			jwt.NiceKey:      u.Username,
 			jwt.DataScopeKey: r.DataScope,
 			jwt.RoleNameKey:  r.RoleName,
+			"tenantId":       u.TenantId,  // 添加租户ID
+			"isAdmin":        u.IsAdmin,   // 添加是否租户管理员标记
 		}
 	}
 	return jwt.MapClaims{}
@@ -43,6 +45,8 @@ func IdentityHandler(c *gin.Context) interface{} {
 		"UserId":      claims["identity"],
 		"RoleIds":     claims["roleid"],
 		"DataScope":   claims["datascope"],
+		"TenantId":    claims["tenantId"],  // 添加租户ID
+		"IsAdmin":     claims["isAdmin"],   // 添加是否租户管理员
 	}
 }
 
@@ -169,6 +173,9 @@ func Authorizator(data interface{}, c *gin.Context) bool {
 		c.Set("userId", u.UserId)
 		c.Set("userName", u.Username)
 		c.Set("dataScope", r.DataScope)
+		c.Set("tenantId", u.TenantId)  // 添加租户ID到上下文
+		c.Set("isAdmin", u.IsAdmin)    // 添加是否租户管理员到上下文
+		c.Set("roleLevel", r.RoleLevel) // 添加角色级别到上下文
 		return true
 	}
 	return false

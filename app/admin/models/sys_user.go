@@ -8,6 +8,7 @@ import (
 
 type SysUser struct {
 	UserId   int      `gorm:"primaryKey;autoIncrement;comment:编码"  json:"userId"`
+	TenantId int      `json:"tenantId" gorm:"index;comment:租户ID;default:0"` // 0表示平台管理员
 	Username string   `json:"username" gorm:"size:64;comment:用户名"`
 	Password string   `json:"-" gorm:"size:128;comment:密码"`
 	NickName string   `json:"nickName" gorm:"size:128;comment:昵称"`
@@ -21,10 +22,12 @@ type SysUser struct {
 	PostId   int      `json:"postId" gorm:"size:20;comment:岗位"`
 	Remark   string   `json:"remark" gorm:"size:255;comment:备注"`
 	Status   string   `json:"status" gorm:"size:4;comment:状态"`
+	IsAdmin  bool     `json:"isAdmin" gorm:"comment:是否为租户管理员;default:false"` // 租户管理员标记
 	DeptIds  []int    `json:"deptIds" gorm:"-"`
 	PostIds  []int    `json:"postIds" gorm:"-"`
 	RoleIds  []int    `json:"roleIds" gorm:"-"`
 	Dept     *SysDept `json:"dept"`
+	Tenant   *SysTenant `json:"tenant,omitempty" gorm:"foreignKey:TenantId"` // 关联租户
 	models.ControlBy
 	models.ModelTime
 }

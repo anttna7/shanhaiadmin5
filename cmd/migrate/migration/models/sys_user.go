@@ -7,6 +7,7 @@ import (
 
 type SysUser struct {
 	UserId   int    `gorm:"primaryKey;autoIncrement;comment:编码"  json:"userId"`
+	TenantId int    `json:"tenantId" gorm:"type:int;index;comment:租户ID;default:0"`
 	Username string `json:"username" gorm:"type:varchar(64);comment:用户名"`
 	Password string `json:"-" gorm:"type:varchar(128);comment:密码"`
 	NickName string `json:"nickName" gorm:"type:varchar(128);comment:昵称"`
@@ -20,6 +21,7 @@ type SysUser struct {
 	PostId   int    `json:"postId" gorm:"type:bigint;comment:岗位"`
 	Remark   string `json:"remark" gorm:"type:varchar(255);comment:备注"`
 	Status   string `json:"status" gorm:"type:varchar(4);comment:状态"`
+	IsAdmin  bool   `json:"isAdmin" gorm:"comment:是否为租户管理员;default:false"`
 	ControlBy
 	ModelTime
 }
