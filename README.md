@@ -92,8 +92,8 @@ English | [简体中文](https://github.com/antna7/shadmin5/main/README.Zh-cn.md
 
 ```bash
 # 克隆项目
-git clone https://github.com/go-admin-team/go-admin.git
-cd go-admin
+git clone <your-repository-url>
+cd shanhaiadmin5
 ```
 
 注意：本版本为单体架构，前端页面已集成在项目中，无需单独克隆前端项目。
@@ -110,7 +110,7 @@ cd go-admin
 psql -U postgres
 
 # 创建数据库
-CREATE DATABASE go_admin;
+CREATE DATABASE sh_admin;
 
 # 退出
 \q
@@ -121,7 +121,7 @@ CREATE DATABASE go_admin;
 ```yaml
 database:
   driver: postgres
-  source: host=127.0.0.1 port=5432 user=postgres password=你的密码 dbname=go_admin sslmode=disable TimeZone=Asia/Shanghai
+  source: host=127.0.0.1 port=5432 user=postgres password=你的密码 dbname=sh_admin sslmode=disable TimeZone=Asia/Shanghai
 ```
 
 #### 编译和运行
@@ -134,10 +134,10 @@ go mod tidy
 go build
 
 # 初始化数据库（首次运行）
-./go-admin migrate -c config/settings.yml
+./shadmin migrate -c config/settings.yml
 
 # 启动服务
-./go-admin server -c config/settings.yml
+./shadmin server -c config/settings.yml
 ```
 
 服务启动后，访问 http://localhost:8000 即可看到登录页面。
@@ -147,7 +147,7 @@ go build
 :::tip ⚠️Note that this problem will occur if CGO is not installed in the windows10+ environment;
 
 ```bash
-E:\go-admin>go build
+E:\shadmin>go build
 # github.com/mattn/go-sqlite3
 cgo: exec /missing-cc: exec: "/missing-cc": file does not exist
 ```
@@ -155,7 +155,7 @@ cgo: exec /missing-cc: exec: "/missing-cc": file does not exist
 or
 
 ```bash
-D:\Code\go-admin>go build
+D:\Code\shadmin>go build
 # github.com/mattn/go-sqlite3
 cgo: exec gcc: exec: "gcc": executable file not found in %PATH%
 ```
@@ -169,29 +169,29 @@ cgo: exec gcc: exec: "gcc": executable file not found in %PATH%
 ``` bash
 # The first configuration needs to initialize the database resource information
 # Use under macOS or linux
-$ ./go-admin migrate -c config/settings.dev.yml
+$ ./shadmin migrate -c config/settings.dev.yml
 
 # ⚠️Note: Use under windows
-$ go-admin.exe migrate -c config/settings.dev.yml
+$ shadmin.exe migrate -c config/settings.dev.yml
 
 # Start the project, you can also use the IDE for debugging
 # Use under macOS or linux
-$ ./go-admin server -c config/settings.yml
+$ ./shadmin server -c config/settings.yml
 
 # ⚠️Note: Use under windows
-$ go-admin.exe server -c config/settings.yml
+$ shadmin.exe server -c config/settings.yml
 ```
 
 #### Use docker to compile and start
 
 ```shell
 # Compile the image
-docker build -t go-admin .
+docker build -t shadmin .
 
 
-# Start the container, the first go-admin is the container name, and the second go-admin is the image name
+# Start the container, the first shadmin is the container name, and the second shadmin is the image name
 # -v Mapping configuration file Local path: container path
-docker run --name go-admin -p 8000:8000 -v /config/settings.yml:/config/settings.yml -d go-admin-server
+docker run --name shadmin -p 8000:8000 -v /config/settings.yml:/config/settings.yml -d shadmin
 ```
 
 

@@ -1,4 +1,4 @@
-# go-admin
+# SHAdmin
 
 [English](https://github.com/anttna7/shadmin5/main/README.md) | 简体中文
 
@@ -70,121 +70,128 @@
 
 ## 准备工作
 
-你需要在本地安装 [go] [gin] [node](http://nodejs.org/) 和 [git](https://git-scm.com/) 
+### 环境要求
 
-同时配套了系列教程包含视频和文档，如何从下载完成到熟练使用，强烈建议大家先看完这些教程再来实践本项目！！！
+- **Go**: 1.25 或更高版本
+- **PostgreSQL**: 18 或更高版本
+- **Git**: 用于代码管理
+
+⚠️ **重要提示**：本版本采用单体架构，前端使用纯 HTML 5，**无需安装 Node.js 和 npm**。
 
 
 ## 📦 本地开发
 
-### 环境要求
-
-go 1.18
-
-node版本: v14.16.0
-
-npm版本: 6.14.11
-
-### 开发目录创建
-
-```bash
-
-# 创建开发目录
-mkdir goadmin
-cd goadmin
-```
-
 ### 获取代码
 
-> 重点注意：两个项目必须放在同一文件夹下；
-
 ```bash
-# 获取后端代码
-git clone https://github.com/go-admin-team/go-admin.git
-
-# 获取前端代码
-git clone https://github.com/go-admin-team/go-admin-ui.git
-
+# 克隆项目
+git clone <your-repository-url>
+cd shanhaiadmin5
 ```
+
+**注意**：本版本为单体架构，前端页面已集成在项目中的 `static/` 目录，无需单独克隆前端项目。
 
 ### 启动说明
 
-#### 服务端启动说明
+#### 配置数据库
+
+1. 安装 PostgreSQL 18+
+2. 创建数据库：
 
 ```bash
-# 进入 go-admin 后端项目
-cd ./go-admin
+# 登录 PostgreSQL
+psql -U postgres
 
-# 更新整理依赖
+# 创建数据库
+CREATE DATABASE sh_admin;
+
+# 退出
+\q
+```
+
+3. 修改配置文件 `config/settings.yml`：
+
+```yaml
+database:
+  driver: postgres
+  source: host=127.0.0.1 port=5432 user=postgres password=你的密码 dbname=sh_admin sslmode=disable TimeZone=Asia/Shanghai
+```
+
+#### 编译和运行
+
+```bash
+# 更新依赖
 go mod tidy
 
 # 编译项目
 go build
 
-# 修改配置 
-# 文件路径  go-admin/config/settings.yml
-vi ./config/settings.yml
+# 初始化数据库（首次运行）
+./shadmin migrate -c config/settings.yml
 
-# 1. 配置文件中修改数据库信息 
-# 注意: settings.database 下对应的配置数据
-# 2. 确认log路径
+# 启动服务
+./shadmin server -c config/settings.yml
 ```
 
-⚠️注意 在windows环境如果没有安装中CGO，会出现这个问题；
+服务启动后，访问 http://localhost:8000 即可看到登录页面。
+
+默认账号密码：admin / 123456
+
+⚠️ **Windows CGO 注意事项**：在 Windows 环境下如果没有安装 CGO，可能会出现以下错误：
 
 ```bash
-E:\go-admin>go build
+E:\shadmin>go build
 # github.com/mattn/go-sqlite3
 cgo: exec /missing-cc: exec: "/missing-cc": file does not exist
 ```
 
-or
+或者：
 
 ```bash
-D:\Code\go-admin>go build
+D:\Code\shadmin>go build
 # github.com/mattn/go-sqlite3
 cgo: exec gcc: exec: "gcc": executable file not found in %PATH%
 ```
 
-[解决cgo问题进入](https://doc.go-admin.dev/zh-CN/guide/faq#cgo-%E7%9A%84%E9%97%AE%E9%A2%98)
+解决方案：安装 MinGW-w64 或使用纯 Go 驱动（本项目推荐使用 PostgreSQL，无 CGO 依赖）。
 
 
-#### 初始化数据库，以及服务启动
+#### 初始化数据库和启动服务
 
 ``` bash
 # 首次配置需要初始化数据库资源信息
 # macOS or linux 下使用
-$ ./go-admin migrate -c config/settings.dev.yml
+$ ./shadmin migrate -c config/settings.dev.yml
 
 # ⚠️注意:windows 下使用
-$ go-admin.exe migrate -c config/settings.dev.yml
+$ shadmin.exe migrate -c config/settings.dev.yml
 
 
 # 启动项目，也可以用IDE进行调试
 # macOS or linux 下使用
-$ ./go-admin server -c config/settings.yml
+$ ./shadmin server -c config/settings.yml
 
 
 # ⚠️注意:windows 下使用
-$ go-admin.exe server -c config/settings.yml
+$ shadmin.exe server -c config/settings.yml
 ```
 
 #### sys_api 表的数据如何添加
 
-在项目启动时，使用`-a true` 系统会自动添加缺少的接口数据
+在项目启动时，使用 `-a true` 参数，系统会自动添加缺少的接口数据：
 ```bash
-./go-admin server -c config/settings.yml -a true
+./shadmin server -c config/settings.yml -a true
 ```
 
-#### 使用docker 编译启动
+#### 使用 Docker 编译启动
 
 ```shell
 # 编译镜像
-docker build -t go-admin .
+docker build -t shadmin .
 
-# 启动容器，第一个go-admin是容器名字，第二个go-admin是镜像名称
+# 启动容器，第一个 shadmin 是容器名字，第二个 shadmin 是镜像名称
 # -v 映射配置文件 本地路径：容器路径
-docker run --name go-admin -p 8000:8000 -v /config/settings.yml:/config/settings.yml -d go-admin-server
+docker run --name shadmin -p 8000:8000 -v /config/settings.yml:/config/settings.yml -d shadmin
 ```
 
 #### 文档生成
