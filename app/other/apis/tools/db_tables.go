@@ -3,9 +3,9 @@ package tools
 import (
 	"errors"
 	"github.com/gin-gonic/gin"
-	"github.com/shadmin-team/shadmin-core/sdk/config"
-	"github.com/shadmin-team/shadmin-core/sdk/pkg"
-	_ "github.com/shadmin-team/shadmin-core/sdk/pkg/response"
+	"github.com/go-admin-team/go-admin-core/sdk/config"
+	"github.com/go-admin-team/go-admin-core/sdk/pkg"
+	_ "github.com/go-admin-team/go-admin-core/sdk/pkg/response"
 
 	"shadmin/app/other/models/tools"
 )

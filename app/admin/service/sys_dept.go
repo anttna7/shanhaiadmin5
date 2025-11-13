@@ -4,13 +4,13 @@ import (
 	"errors"
 	"shadmin/app/admin/models"
 
-	log "github.com/shadmin-team/shadmin-core/logger"
-	"github.com/shadmin-team/shadmin-core/sdk/pkg"
+	log "github.com/go-admin-team/go-admin-core/logger"
+	"github.com/go-admin-team/go-admin-core/sdk/pkg"
 
 	"shadmin/app/admin/service/dto"
 	cDto "shadmin/common/dto"
 
-	"github.com/shadmin-team/shadmin-core/sdk/service"
+	"github.com/go-admin-team/go-admin-core/sdk/service"
 )
 
 type SysDept struct {

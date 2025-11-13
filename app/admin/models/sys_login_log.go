@@ -5,9 +5,9 @@ import (
 	"errors"
 	"time"
 
-	log "github.com/shadmin-team/shadmin-core/logger"
-	"github.com/shadmin-team/shadmin-core/sdk"
-	"github.com/shadmin-team/shadmin-core/storage"
+	log "github.com/go-admin-team/go-admin-core/logger"
+	"github.com/go-admin-team/go-admin-core/sdk"
+	"github.com/go-admin-team/go-admin-core/storage"
 
 	"shadmin/common/models"
 )

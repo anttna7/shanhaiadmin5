@@ -13,10 +13,10 @@ import (
 	"time"
 
 	"github.com/gin-gonic/gin"
-	"github.com/shadmin-team/shadmin-core/sdk"
-	"github.com/shadmin-team/shadmin-core/sdk/api"
-	"github.com/shadmin-team/shadmin-core/sdk/config"
-	"github.com/shadmin-team/shadmin-core/sdk/pkg/jwtauth/user"
+	"github.com/go-admin-team/go-admin-core/sdk"
+	"github.com/go-admin-team/go-admin-core/sdk/api"
+	"github.com/go-admin-team/go-admin-core/sdk/config"
+	"github.com/go-admin-team/go-admin-core/sdk/pkg/jwtauth/user"
 
 	"shadmin/common/global"
 )

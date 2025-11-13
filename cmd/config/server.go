@@ -4,10 +4,10 @@ import (
 	"encoding/json"
 	"fmt"
 
-	"github.com/shadmin-team/shadmin-core/config/source/file"
+	"github.com/go-admin-team/go-admin-core/config/source/file"
 	"github.com/spf13/cobra"
 
-	"github.com/shadmin-team/shadmin-core/sdk/config"
+	"github.com/go-admin-team/go-admin-core/sdk/config"
 )
 
 var (

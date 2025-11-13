@@ -3,7 +3,7 @@ package cmd
 import (
 	"errors"
 	"fmt"
-	"github.com/shadmin-team/shadmin-core/sdk/pkg"
+	"github.com/go-admin-team/go-admin-core/sdk/pkg"
 	"shadmin/cmd/app"
 	"shadmin/common/global"
 	"os"

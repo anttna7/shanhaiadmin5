@@ -11,9 +11,9 @@ import (
 	"time"
 
 	"github.com/gin-gonic/gin"
-	"github.com/shadmin-team/shadmin-core/sdk/api"
-	"github.com/shadmin-team/shadmin-core/sdk/config"
-	"github.com/shadmin-team/shadmin-core/sdk/pkg"
+	"github.com/go-admin-team/go-admin-core/sdk/api"
+	"github.com/go-admin-team/go-admin-core/sdk/config"
+	"github.com/go-admin-team/go-admin-core/sdk/pkg"
 
 	"shadmin/app/other/models/tools"
 )

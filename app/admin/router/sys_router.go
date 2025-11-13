@@ -4,11 +4,11 @@ import (
 	"shadmin/app/admin/apis"
 	"mime"
 
-	"github.com/shadmin-team/shadmin-core/sdk/config"
+	"github.com/go-admin-team/go-admin-core/sdk/config"
 
 	"github.com/gin-gonic/gin"
-	jwt "github.com/shadmin-team/shadmin-core/sdk/pkg/jwtauth"
-	"github.com/shadmin-team/shadmin-core/sdk/pkg/ws"
+	jwt "github.com/go-admin-team/go-admin-core/sdk/pkg/jwtauth"
+	"github.com/go-admin-team/go-admin-core/sdk/pkg/ws"
 	ginSwagger "github.com/swaggo/gin-swagger"
 
 	swaggerfiles "github.com/swaggo/files"

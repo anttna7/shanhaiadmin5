@@ -4,10 +4,10 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-	"github.com/shadmin-team/shadmin-core/sdk/api"
-	"github.com/shadmin-team/shadmin-core/sdk/pkg"
-	"github.com/shadmin-team/shadmin-core/sdk/pkg/jwtauth/user"
-	"github.com/shadmin-team/shadmin-core/sdk/pkg/response"
+	"github.com/go-admin-team/go-admin-core/sdk/api"
+	"github.com/go-admin-team/go-admin-core/sdk/pkg"
+	"github.com/go-admin-team/go-admin-core/sdk/pkg/jwtauth/user"
+	"github.com/go-admin-team/go-admin-core/sdk/pkg/response"
 
 	"shadmin/common/dto"
 	"shadmin/common/models"

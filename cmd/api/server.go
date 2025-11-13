@@ -9,12 +9,12 @@ import (
 	"time"
 
 	"github.com/gin-gonic/gin"
-	"github.com/shadmin-team/shadmin-core/config/source/file"
-	log "github.com/shadmin-team/shadmin-core/logger"
-	"github.com/shadmin-team/shadmin-core/sdk"
-	"github.com/shadmin-team/shadmin-core/sdk/api"
-	"github.com/shadmin-team/shadmin-core/sdk/config"
-	"github.com/shadmin-team/shadmin-core/sdk/pkg"
+	"github.com/go-admin-team/go-admin-core/config/source/file"
+	log "github.com/go-admin-team/go-admin-core/logger"
+	"github.com/go-admin-team/go-admin-core/sdk"
+	"github.com/go-admin-team/go-admin-core/sdk/api"
+	"github.com/go-admin-team/go-admin-core/sdk/config"
+	"github.com/go-admin-team/go-admin-core/sdk/pkg"
 	"github.com/pkg/errors"
 	"github.com/spf13/cobra"
 

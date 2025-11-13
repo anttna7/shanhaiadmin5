@@ -2,7 +2,7 @@ package dto
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/shadmin-team/shadmin-core/sdk/api"
+	"github.com/go-admin-team/go-admin-core/sdk/api"
 	"shadmin/app/jobs/models"
 
 	"shadmin/common/dto"

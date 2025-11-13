@@ -3,12 +3,12 @@ package service
 import (
 	"errors"
 
-	"github.com/shadmin-team/shadmin-core/sdk/config"
+	"github.com/go-admin-team/go-admin-core/sdk/config"
 	"gorm.io/gorm/clause"
 
 	"github.com/casbin/casbin/v2"
 
-	"github.com/shadmin-team/shadmin-core/sdk/service"
+	"github.com/go-admin-team/go-admin-core/sdk/service"
 	"gorm.io/gorm"
 
 	"shadmin/app/admin/models"

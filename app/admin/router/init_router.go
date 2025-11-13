@@ -4,8 +4,8 @@ import (
 	"os"
 
 	"github.com/gin-gonic/gin"
-	log "github.com/shadmin-team/shadmin-core/logger"
-	"github.com/shadmin-team/shadmin-core/sdk"
+	log "github.com/go-admin-team/go-admin-core/logger"
+	"github.com/go-admin-team/go-admin-core/sdk"
 	common "shadmin/common/middleware"
 )
 

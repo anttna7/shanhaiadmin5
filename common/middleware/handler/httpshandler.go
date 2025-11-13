@@ -4,7 +4,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/unrolled/secure"
 
-	"github.com/shadmin-team/shadmin-core/sdk/config"
+	"github.com/go-admin-team/go-admin-core/sdk/config"
 )
 
 func TlsHandler() gin.HandlerFunc {

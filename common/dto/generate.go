@@ -5,7 +5,7 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-	"github.com/shadmin-team/shadmin-core/sdk/api"
+	"github.com/go-admin-team/go-admin-core/sdk/api"
 )
 
 type ObjectById struct {

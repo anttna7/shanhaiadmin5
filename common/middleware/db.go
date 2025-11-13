@@ -2,7 +2,7 @@ package middleware
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/shadmin-team/shadmin-core/sdk"
+	"github.com/go-admin-team/go-admin-core/sdk"
 )
 
 func WithContextDb(c *gin.Context) {

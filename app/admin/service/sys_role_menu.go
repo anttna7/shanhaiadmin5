@@ -1,7 +1,7 @@
 package service
 
 import (
-	"github.com/shadmin-team/shadmin-core/sdk/service"
+	"github.com/go-admin-team/go-admin-core/sdk/service"
 )
 
 // SysRoleMenu 即将弃用结构体

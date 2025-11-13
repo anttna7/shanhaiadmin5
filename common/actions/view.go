@@ -2,12 +2,12 @@ package actions
 
 import (
 	"errors"
-	"github.com/shadmin-team/shadmin-core/sdk/pkg/response"
+	"github.com/go-admin-team/go-admin-core/sdk/pkg/response"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-	log "github.com/shadmin-team/shadmin-core/logger"
-	"github.com/shadmin-team/shadmin-core/sdk/pkg"
+	log "github.com/go-admin-team/go-admin-core/logger"
+	"github.com/go-admin-team/go-admin-core/sdk/pkg"
 	"gorm.io/gorm"
 
 	"shadmin/common/dto"

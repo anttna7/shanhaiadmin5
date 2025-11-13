@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/gin-gonic/gin/binding"
-	"github.com/shadmin-team/shadmin-core/sdk/api"
+	"github.com/go-admin-team/go-admin-core/sdk/api"
 	"shadmin/app/admin/models"
 	"shadmin/app/admin/service"
 	"shadmin/app/admin/service/dto"

@@ -4,7 +4,7 @@ import (
 	"errors"
 	"time"
 
-	"github.com/shadmin-team/shadmin-core/sdk/service"
+	"github.com/go-admin-team/go-admin-core/sdk/service"
 	"github.com/robfig/cron/v3"
 
 	"shadmin/app/jobs"

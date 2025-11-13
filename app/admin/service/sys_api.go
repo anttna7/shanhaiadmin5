@@ -4,8 +4,8 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/shadmin-team/shadmin-core/sdk/runtime"
-	"github.com/shadmin-team/shadmin-core/sdk/service"
+	"github.com/go-admin-team/go-admin-core/sdk/runtime"
+	"github.com/go-admin-team/go-admin-core/sdk/service"
 	"shadmin/app/admin/models"
 	"shadmin/app/admin/service/dto"
 	"shadmin/common/actions"

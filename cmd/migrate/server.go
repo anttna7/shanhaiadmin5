@@ -3,16 +3,16 @@ package migrate
 import (
 	"bytes"
 	"fmt"
-	"github.com/shadmin-team/shadmin-core/sdk"
-	"github.com/shadmin-team/shadmin-core/sdk/pkg"
+	"github.com/go-admin-team/go-admin-core/sdk"
+	"github.com/go-admin-team/go-admin-core/sdk/pkg"
 	"strconv"
 	"text/template"
 	"time"
 
-	"github.com/shadmin-team/shadmin-core/config/source/file"
+	"github.com/go-admin-team/go-admin-core/config/source/file"
 	"github.com/spf13/cobra"
 
-	"github.com/shadmin-team/shadmin-core/sdk/config"
+	"github.com/go-admin-team/go-admin-core/sdk/config"
 	"shadmin/cmd/migrate/migration"
 	_ "shadmin/cmd/migrate/migration/version"
 	_ "shadmin/cmd/migrate/migration/version-local"

@@ -1,7 +1,7 @@
 package version
 
 import (
-	"github.com/shadmin-team/shadmin-core/sdk/config"
+	"github.com/go-admin-team/go-admin-core/sdk/config"
 	"runtime"
 
 	"shadmin/cmd/migrate/migration"
