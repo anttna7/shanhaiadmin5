@@ -99,13 +99,132 @@ function getHeaders() {
 // 加载仪表板数据
 async function loadDashboard() {
     try {
-        // 模拟数据，实际应该调用API
-        document.getElementById('totalUsers').textContent = '156';
-        document.getElementById('totalRoles').textContent = '8';
-        document.getElementById('totalDepts').textContent = '12';
-        document.getElementById('onlineUsers').textContent = '23';
+        // 显示租户相关信息（仅平台管理员）
+        if (isPlatformAdmin()) {
+            document.getElementById('tenantCard').style.display = 'block';
+            document.getElementById('quickAddTenant').style.display = 'inline-block';
+        }
+
+        // 显示当前用户信息
+        const username = localStorage.getItem('username');
+        const tenantId = localStorage.getItem('tenantId');
+        const userType = tenantId === '0' ? '平台管理员' : '租户用户';
+        document.getElementById('currentUserInfo').innerHTML = `
+            <strong>${username}</strong>
+            <span class="sh-badge sh-badge-${tenantId === '0' ? 'primary' : 'success'}">${userType}</span>
+        `;
+
+        // 并行加载所有统计数据
+        await Promise.all([
+            loadUserStats(),
+            loadRoleStats(),
+            loadDeptStats(),
+            isPlatformAdmin() ? loadTenantStats() : Promise.resolve()
+        ]);
+
     } catch (error) {
         console.error('Error loading dashboard:', error);
+        SHAdmin.toast.error('加载仪表板数据失败');
+    }
+}
+
+// 加载用户统计
+async function loadUserStats() {
+    try {
+        const response = await SHAdmin.http.get('/api/v1/sysUserList?pageIndex=1&pageSize=1');
+
+        if (response.code === 200 && response.data) {
+            const total = response.data.count || 0;
+            document.getElementById('totalUsers').textContent = total;
+
+            // 计算活跃用户数（状态为正常的用户）
+            const activeResponse = await SHAdmin.http.get('/api/v1/sysUserList?pageIndex=1&pageSize=1&status=2');
+            const activeCount = activeResponse.data?.count || 0;
+            const activePercent = total > 0 ? Math.round((activeCount / total) * 100) : 0;
+
+            document.getElementById('totalUsersChange').innerHTML = `
+                活跃用户 ${activeCount} 人 (${activePercent}%)
+            `;
+        } else {
+            throw new Error('获取用户统计失败');
+        }
+    } catch (error) {
+        console.error('Error loading user stats:', error);
+        document.getElementById('totalUsers').innerHTML = '<span style="color: #f44336;">-</span>';
+        document.getElementById('totalUsersChange').textContent = '加载失败';
+    }
+}
+
+// 加载角色统计
+async function loadRoleStats() {
+    try {
+        const response = await SHAdmin.http.get('/api/v1/roleList?pageIndex=1&pageSize=1');
+
+        if (response.code === 200 && response.data) {
+            const total = response.data.count || 0;
+            document.getElementById('totalRoles').textContent = total;
+
+            // 计算启用的角色数
+            const activeResponse = await SHAdmin.http.get('/api/v1/roleList?pageIndex=1&pageSize=1&status=2');
+            const activeCount = activeResponse.data?.count || 0;
+
+            document.getElementById('totalRolesChange').innerHTML = `
+                启用角色 ${activeCount} 个
+            `;
+        } else {
+            throw new Error('获取角色统计失败');
+        }
+    } catch (error) {
+        console.error('Error loading role stats:', error);
+        document.getElementById('totalRoles').innerHTML = '<span style="color: #f44336;">-</span>';
+        document.getElementById('totalRolesChange').textContent = '加载失败';
+    }
+}
+
+// 加载部门统计
+async function loadDeptStats() {
+    try {
+        const response = await SHAdmin.http.get('/api/v1/deptList');
+
+        if (response.code === 200 && response.data) {
+            const depts = Array.isArray(response.data) ? response.data : (response.data.list || []);
+            const total = depts.length;
+            document.getElementById('totalDepts').textContent = total;
+
+            document.getElementById('totalDeptsChange').textContent = total > 0 ? '组织架构完善' : '暂无部门';
+        } else {
+            throw new Error('获取部门统计失败');
+        }
+    } catch (error) {
+        console.error('Error loading dept stats:', error);
+        document.getElementById('totalDepts').innerHTML = '<span style="color: #f44336;">-</span>';
+        document.getElementById('totalDeptsChange').textContent = '加载失败';
+    }
+}
+
+// 加载租户统计（仅平台管理员）
+async function loadTenantStats() {
+    try {
+        const response = await SHAdmin.http.get('/api/v1/tenant?pageIndex=1&pageSize=1');
+
+        if (response.code === 200 && response.data) {
+            const total = response.data.count || 0;
+            document.getElementById('totalTenants').textContent = total;
+
+            // 计算活跃租户数
+            const activeResponse = await SHAdmin.http.get('/api/v1/tenant?pageIndex=1&pageSize=1&status=2');
+            const activeCount = activeResponse.data?.count || 0;
+
+            document.getElementById('totalTenantsChange').innerHTML = `
+                活跃租户 ${activeCount} 个
+            `;
+        } else {
+            throw new Error('获取租户统计失败');
+        }
+    } catch (error) {
+        console.error('Error loading tenant stats:', error);
+        document.getElementById('totalTenants').innerHTML = '<span style="color: #f44336;">-</span>';
+        document.getElementById('totalTenantsChange').textContent = '加载失败';
     }
 }
 

@@ -41,23 +41,93 @@
 
             <main class="content">
                 <div id="dashboard" class="page active">
-                    <h2>系统概览</h2>
+                    <div class="page-header">
+                        <h1>系统概览</h1>
+                        <p>欢迎回来！这是您的系统运行状态总览</p>
+                    </div>
+
                     <div class="stats-grid">
-                        <div class="stat-card">
+                        <div class="stat-card primary">
                             <h3>用户总数</h3>
-                            <p class="stat-number" id="totalUsers">0</p>
+                            <p class="stat-number" id="totalUsers">
+                                <span class="sh-loading-spinner" style="font-size: 24px;">⏳</span>
+                            </p>
+                            <p class="stat-change" id="totalUsersChange">统计中...</p>
                         </div>
-                        <div class="stat-card">
+                        <div class="stat-card success">
                             <h3>角色总数</h3>
-                            <p class="stat-number" id="totalRoles">0</p>
+                            <p class="stat-number" id="totalRoles">
+                                <span class="sh-loading-spinner" style="font-size: 24px;">⏳</span>
+                            </p>
+                            <p class="stat-change" id="totalRolesChange">统计中...</p>
                         </div>
-                        <div class="stat-card">
+                        <div class="stat-card warning" id="tenantCard" style="display: none;">
+                            <h3>租户总数</h3>
+                            <p class="stat-number" id="totalTenants">
+                                <span class="sh-loading-spinner" style="font-size: 24px;">⏳</span>
+                            </p>
+                            <p class="stat-change" id="totalTenantsChange">统计中...</p>
+                        </div>
+                        <div class="stat-card info">
                             <h3>部门总数</h3>
-                            <p class="stat-number" id="totalDepts">0</p>
+                            <p class="stat-number" id="totalDepts">
+                                <span class="sh-loading-spinner" style="font-size: 24px;">⏳</span>
+                            </p>
+                            <p class="stat-change" id="totalDeptsChange">统计中...</p>
                         </div>
-                        <div class="stat-card">
-                            <h3>在线用户</h3>
-                            <p class="stat-number" id="onlineUsers">0</p>
+                    </div>
+
+                    <!-- 快速操作 -->
+                    <div class="card" style="margin-top: 30px;">
+                        <div class="card-header">
+                            <h3>快速操作</h3>
+                        </div>
+                        <div class="card-body">
+                            <div style="display: flex; gap: 15px; flex-wrap: wrap;">
+                                <button class="btn btn-primary" onclick="document.querySelector('a[href=\\'#users\\']').click(); openUserModal();">
+                                    新增用户
+                                </button>
+                                <button class="btn btn-primary" onclick="document.querySelector('a[href=\\'#roles\\']').click(); openRoleModal();">
+                                    新增角色
+                                </button>
+                                <button class="btn btn-primary" id="quickAddTenant" style="display: none;" onclick="document.querySelector('a[href=\\'#tenants\\']').click(); openTenantModal();">
+                                    新增租户
+                                </button>
+                                <button class="btn btn-outline" onclick="location.reload();">
+                                    刷新数据
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 系统信息 -->
+                    <div class="card" style="margin-top: 20px;">
+                        <div class="card-header">
+                            <h3>系统信息</h3>
+                        </div>
+                        <div class="card-body">
+                            <table style="width: 100%; border-collapse: collapse;">
+                                <tr style="border-bottom: 1px solid #eee;">
+                                    <td style="padding: 12px 0; color: #666;">系统名称</td>
+                                    <td style="padding: 12px 0;"><strong>SH Admin 管理系统</strong></td>
+                                </tr>
+                                <tr style="border-bottom: 1px solid #eee;">
+                                    <td style="padding: 12px 0; color: #666;">系统版本</td>
+                                    <td style="padding: 12px 0;"><span class="sh-badge sh-badge-primary">v1.0.0</span></td>
+                                </tr>
+                                <tr style="border-bottom: 1px solid #eee;">
+                                    <td style="padding: 12px 0; color: #666;">技术栈</td>
+                                    <td style="padding: 12px 0;">Go 1.24 + PostgreSQL 18 + Gin 1.11 + HTML5</td>
+                                </tr>
+                                <tr style="border-bottom: 1px solid #eee;">
+                                    <td style="padding: 12px 0; color: #666;">架构模式</td>
+                                    <td style="padding: 12px 0;">单体架构 + 多租户支持</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 12px 0; color: #666;">当前用户</td>
+                                    <td style="padding: 12px 0;" id="currentUserInfo">加载中...</td>
+                                </tr>
+                            </table>
                         </div>
                     </div>
                 </div>
