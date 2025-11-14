@@ -50,6 +50,32 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('tenantMenuItem').style.display = 'block';
     }
 
+    // 汉堡菜单切换
+    const menuToggle = document.getElementById('menuToggle');
+    const sidebar = document.querySelector('.sidebar');
+    const sidebarOverlay = document.querySelector('.sidebar-overlay');
+
+    function toggleSidebar() {
+        menuToggle.classList.toggle('active');
+        sidebar.classList.toggle('sidebar-open');
+        sidebarOverlay.classList.toggle('active');
+    }
+
+    function closeSidebar() {
+        menuToggle.classList.remove('active');
+        sidebar.classList.remove('sidebar-open');
+        sidebarOverlay.classList.remove('active');
+    }
+
+    // 点击汉堡菜单按钮
+    menuToggle.addEventListener('click', function(e) {
+        e.stopPropagation();
+        toggleSidebar();
+    });
+
+    // 点击遮罩层关闭侧边栏
+    sidebarOverlay.addEventListener('click', closeSidebar);
+
     // 菜单导航
     const menuLinks = document.querySelectorAll('.menu a');
     const pages = document.querySelectorAll('.page');
@@ -72,6 +98,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 // 加载对应页面数据
                 loadPageData(targetId);
             }
+
+            // 在移动端，点击菜单项后关闭侧边栏
+            if (window.innerWidth <= 768) {
+                closeSidebar();
+            }
         });
     });
 
@@ -80,6 +111,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (confirm('确定要退出登录吗?')) {
             localStorage.removeItem('token');
             localStorage.removeItem('username');
+            localStorage.removeItem('tenantId');
             window.location.href = '/login';
         }
     });

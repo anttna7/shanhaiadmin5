@@ -385,10 +385,62 @@ body {
     color: var(--text-primary);
 }
 
+.header h3 {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+}
+
 .header-right {
     display: flex;
     align-items: center;
     gap: var(--spacing-md);
+}
+
+/* 汉堡菜单按钮 */
+.menu-toggle {
+    display: none;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 32px;
+    height: 32px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+    z-index: 11;
+    transition: all var(--transition-base);
+}
+
+.menu-toggle span {
+    width: 100%;
+    height: 3px;
+    background: var(--text-primary);
+    border-radius: 2px;
+    transition: all var(--transition-base);
+    transform-origin: center;
+}
+
+.menu-toggle:hover span {
+    background: var(--primary-color);
+}
+
+.menu-toggle.active span:nth-child(1) {
+    transform: translateY(9px) rotate(45deg);
+}
+
+.menu-toggle.active span:nth-child(2) {
+    opacity: 0;
+}
+
+.menu-toggle.active span:nth-child(3) {
+    transform: translateY(-9px) rotate(-45deg);
 }
 
 .user-info {
@@ -752,25 +804,71 @@ body {
 }
 
 @media (max-width: 768px) {
+    /* 显示汉堡菜单按钮 */
+    .menu-toggle {
+        display: flex;
+    }
+
+    /* 侧边栏改为覆盖层模式 */
     .container {
-        flex-direction: column;
+        position: relative;
     }
 
     .sidebar {
-        width: 100%;
-        height: auto;
-        max-height: 50vh;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 280px;
+        height: 100vh;
+        z-index: 1000;
+        transform: translateX(-100%);
+        transition: transform var(--transition-base);
+    }
+
+    .sidebar.sidebar-open {
+        transform: translateX(0);
+        box-shadow: 2px 0 20px rgba(0, 0, 0, 0.3);
+    }
+
+    /* 侧边栏遮罩层 */
+    .sidebar-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 999;
+        opacity: 0;
+        visibility: hidden;
+        transition: all var(--transition-base);
+    }
+
+    .sidebar-overlay.active {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    /* 增大触摸目标 */
+    .menu a {
+        padding: var(--spacing-lg) var(--spacing-lg);
+        min-height: 48px;
     }
 
     .header {
         padding: var(--spacing-md) var(--spacing-lg);
-        flex-direction: column;
-        gap: var(--spacing-md);
+    }
+
+    .header h3 {
+        font-size: 16px;
     }
 
     .header-right {
-        width: 100%;
-        justify-content: space-between;
+        gap: var(--spacing-sm);
+    }
+
+    .header-right span {
+        display: none;
     }
 
     .content {
@@ -779,6 +877,7 @@ body {
 
     .stats-grid {
         grid-template-columns: 1fr;
+        gap: var(--spacing-md);
     }
 
     .table-actions {
@@ -788,18 +887,60 @@ body {
 
     .table-wrapper {
         overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
     }
 
     .data-table {
         min-width: 600px;
     }
 
+    /* 优化按钮触摸目标 */
+    .btn {
+        min-height: 44px;
+        padding: 12px 20px;
+    }
+
+    .btn-sm {
+        min-height: 36px;
+        padding: 8px 14px;
+    }
+
     .login-box {
         padding: var(--spacing-lg);
+    }
+
+    /* 卡片在移动端的优化 */
+    .card {
+        padding: var(--spacing-lg);
+        margin-bottom: var(--spacing-md);
     }
 }
 
 @media (max-width: 480px) {
+    .sidebar {
+        width: 85vw;
+        max-width: 300px;
+    }
+
+    .header {
+        padding: var(--spacing-sm) var(--spacing-md);
+        min-height: 56px;
+    }
+
+    .header h3 {
+        font-size: 14px;
+    }
+
+    .menu-toggle {
+        width: 28px;
+        height: 28px;
+    }
+
+    .btn-secondary {
+        padding: 6px 12px;
+        font-size: 13px;
+    }
+
     .login-box h1 {
         font-size: 22px;
     }
@@ -814,6 +955,26 @@ body {
 
     .stat-number {
         font-size: 28px;
+    }
+
+    .content {
+        padding: var(--spacing-md);
+    }
+
+    /* 表格在小屏幕上的优化 */
+    .data-table {
+        font-size: 13px;
+    }
+
+    .data-table th,
+    .data-table td {
+        padding: var(--spacing-sm);
+    }
+
+    .data-table button {
+        padding: 4px 8px;
+        font-size: 12px;
+        margin: 2px;
     }
 }
 
