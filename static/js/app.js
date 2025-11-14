@@ -129,28 +129,65 @@ async function loadPageData(pageId) {
     }
 }
 
+// ============================================
+// 用户管理功能
+// ============================================
+
+// 用户管理状态
+const userState = {
+    currentPage: 1,
+    pageSize: 10,
+    total: 0,
+    searchParams: {},
+    rolesList: [] // 缓存角色列表
+};
+
 // 加载用户列表
-async function loadUsers() {
+async function loadUsers(page = 1) {
+    userState.currentPage = page;
     const tbody = document.getElementById('usersTableBody');
 
     try {
-        const response = await fetch('/api/v1/sysUserList', {
-            headers: getHeaders()
+        SHAdmin.loading.show('加载中...');
+
+        const params = new URLSearchParams({
+            pageIndex: page,
+            pageSize: userState.pageSize,
+            ...userState.searchParams
         });
 
-        if (response.ok) {
-            const data = await response.json();
-            if (data.code === 200 && data.data && data.data.list) {
-                renderUsers(data.data.list);
-            } else {
-                tbody.innerHTML = '<tr><td colspan="6">暂无数据</td></tr>';
-            }
+        const response = await SHAdmin.http.get(`/api/v1/sysUserList?${params}`);
+
+        if (response.code === 200 && response.data) {
+            userState.total = response.data.count || 0;
+            renderUsers(response.data.list || []);
+            renderUserPagination();
         } else {
-            tbody.innerHTML = '<tr><td colspan="6">加载失败</td></tr>';
+            tbody.innerHTML = `
+                <tr>
+                    <td colspan="8" class="text-center">
+                        <div class="sh-empty-state">
+                            <div class="sh-empty-state-icon">⚠️</div>
+                            <div class="sh-empty-state-text">${response.msg || '加载失败'}</div>
+                        </div>
+                    </td>
+                </tr>
+            `;
         }
     } catch (error) {
         console.error('Error loading users:', error);
-        tbody.innerHTML = '<tr><td colspan="6">加载失败</td></tr>';
+        tbody.innerHTML = `
+            <tr>
+                <td colspan="8" class="text-center">
+                    <div class="sh-empty-state">
+                        <div class="sh-empty-state-icon">❌</div>
+                        <div class="sh-empty-state-text">加载失败，请稍后重试</div>
+                    </div>
+                </td>
+            </tr>
+        `;
+    } finally {
+        SHAdmin.loading.hide();
     }
 }
 
@@ -158,20 +195,35 @@ async function loadUsers() {
 function renderUsers(users) {
     const tbody = document.getElementById('usersTableBody');
 
-    if (users.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="6">暂无数据</td></tr>';
+    if (!users || users.length === 0) {
+        tbody.innerHTML = `
+            <tr>
+                <td colspan="8" class="text-center">
+                    <div class="sh-empty-state">
+                        <div class="sh-empty-state-icon">📋</div>
+                        <div class="sh-empty-state-text">暂无数据</div>
+                    </div>
+                </td>
+            </tr>
+        `;
         return;
     }
 
     let html = '';
     users.forEach(user => {
+        const statusBadge = user.status === '2'
+            ? '<span class="sh-badge sh-badge-success">正常</span>'
+            : '<span class="sh-badge sh-badge-error">禁用</span>';
+
         html += `
             <tr>
                 <td>${user.userId || user.id}</td>
-                <td>${user.username}</td>
+                <td><strong>${user.username}</strong></td>
                 <td>${user.nickName || '-'}</td>
                 <td>${user.email || '-'}</td>
-                <td>${user.status === '2' ? '正常' : '禁用'}</td>
+                <td>${user.phone || '-'}</td>
+                <td>${user.roleName || '-'}</td>
+                <td>${statusBadge}</td>
                 <td>
                     <button class="edit" onclick="editUser(${user.userId || user.id})">编辑</button>
                     <button class="delete" onclick="deleteUser(${user.userId || user.id})">删除</button>
@@ -183,28 +235,264 @@ function renderUsers(users) {
     tbody.innerHTML = html;
 }
 
+// 渲染用户分页
+function renderUserPagination() {
+    SHAdmin.pagination.render('userPagination', {
+        currentPage: userState.currentPage,
+        pageSize: userState.pageSize,
+        total: userState.total,
+        onPageChange: (page) => {
+            loadUsers(page);
+        }
+    });
+}
+
+// 加载角色列表（用于下拉选择）
+async function loadRolesForSelect() {
+    try {
+        const response = await SHAdmin.http.get('/api/v1/roleList?pageIndex=1&pageSize=100');
+        if (response.code === 200 && response.data && response.data.list) {
+            userState.rolesList = response.data.list;
+            return response.data.list;
+        }
+        return [];
+    } catch (error) {
+        console.error('Error loading roles:', error);
+        return [];
+    }
+}
+
+// 打开用户创建/编辑模态框
+async function openUserModal(userId = null) {
+    const isEdit = userId !== null;
+    let user = null;
+
+    // 加载角色列表
+    const roles = await loadRolesForSelect();
+    if (roles.length === 0) {
+        SHAdmin.toast.error('请先创建角色');
+        return;
+    }
+
+    // 如果是编辑模式，先加载用户数据
+    if (isEdit) {
+        try {
+            SHAdmin.loading.show('加载数据...');
+            const response = await SHAdmin.http.get(`/api/v1/sysUser/${userId}`);
+            SHAdmin.loading.hide();
+
+            if (response.code === 200 && response.data) {
+                user = response.data;
+            } else {
+                SHAdmin.toast.error(response.msg || '加载用户信息失败');
+                return;
+            }
+        } catch (error) {
+            SHAdmin.loading.hide();
+            SHAdmin.toast.error('加载用户信息失败');
+            return;
+        }
+    }
+
+    // 生成角色选项
+    const roleOptions = roles.map(role =>
+        `<option value="${role.roleId}" ${user && user.roleId === role.roleId ? 'selected' : ''}>${role.roleName}</option>`
+    ).join('');
+
+    // 构建表单HTML
+    const formHtml = `
+        <form id="userForm">
+            <div class="sh-form-group">
+                <label>用户名 <span class="required">*</span></label>
+                <input type="text" name="username" value="${user?.username || ''}"
+                    placeholder="请输入用户名" required ${isEdit ? 'readonly' : ''}>
+                ${isEdit ? '<small style="color: #999;">用户名创建后不可修改</small>' : ''}
+            </div>
+
+            ${!isEdit ? `
+            <div class="sh-form-group">
+                <label>密码 <span class="required">*</span></label>
+                <input type="password" name="password" placeholder="请输入密码" required>
+            </div>
+            ` : ''}
+
+            <div class="sh-form-group">
+                <label>姓名 <span class="required">*</span></label>
+                <input type="text" name="nickName" value="${user?.nickName || ''}"
+                    placeholder="请输入姓名" required>
+            </div>
+
+            <div class="sh-form-group">
+                <label>邮箱</label>
+                <input type="email" name="email" value="${user?.email || ''}"
+                    placeholder="请输入邮箱">
+            </div>
+
+            <div class="sh-form-group">
+                <label>手机号</label>
+                <input type="tel" name="phone" value="${user?.phone || ''}"
+                    placeholder="请输入手机号">
+            </div>
+
+            <div class="sh-form-group">
+                <label>角色 <span class="required">*</span></label>
+                <select name="roleId" required>
+                    <option value="">请选择角色</option>
+                    ${roleOptions}
+                </select>
+            </div>
+
+            <div class="sh-form-group">
+                <label>部门ID</label>
+                <input type="number" name="deptId" value="${user?.deptId || ''}"
+                    placeholder="请输入部门ID">
+            </div>
+
+            <div class="sh-form-group">
+                <label>岗位ID</label>
+                <input type="number" name="postId" value="${user?.postId || ''}"
+                    placeholder="请输入岗位ID">
+            </div>
+
+            <div class="sh-form-group">
+                <label>状态 <span class="required">*</span></label>
+                <select name="status" required>
+                    <option value="2" ${!user || user.status === '2' ? 'selected' : ''}>正常</option>
+                    <option value="1" ${user?.status === '1' ? 'selected' : ''}>禁用</option>
+                </select>
+            </div>
+
+            <div class="sh-form-group">
+                <label>备注</label>
+                <textarea name="remark" placeholder="请输入备注">${user?.remark || ''}</textarea>
+            </div>
+        </form>
+    `;
+
+    // 打开模态框
+    SHAdmin.modal.open({
+        title: isEdit ? '编辑用户' : '新增用户',
+        content: formHtml,
+        width: '600px',
+        onConfirm: async () => {
+            const formData = new FormData(document.getElementById('userForm'));
+            const data = Object.fromEntries(formData.entries());
+
+            // 表单验证
+            const validationRules = {
+                username: { required: true, message: '请输入用户名' },
+                nickName: { required: true, message: '请输入姓名' },
+                roleId: { required: true, message: '请选择角色' },
+                status: { required: true, message: '请选择状态' }
+            };
+
+            if (!isEdit) {
+                validationRules.password = { required: true, minLength: 6, message: '密码不能少于6位' };
+            }
+
+            if (data.email) {
+                validationRules.email = { email: true, message: '邮箱格式不正确' };
+            }
+
+            if (data.phone) {
+                validationRules.phone = { phone: true, message: '手机号格式不正确' };
+            }
+
+            const validation = SHAdmin.validate.validateForm(data, validationRules);
+            if (!validation.valid) {
+                const firstError = Object.values(validation.errors)[0];
+                SHAdmin.toast.error(firstError);
+                return false;
+            }
+
+            // 提交数据
+            try {
+                SHAdmin.loading.show(isEdit ? '更新中...' : '创建中...');
+
+                let response;
+                if (isEdit) {
+                    response = await SHAdmin.http.put(`/api/v1/sysUser/${userId}`, data);
+                } else {
+                    response = await SHAdmin.http.post('/api/v1/sysUser', data);
+                }
+
+                SHAdmin.loading.hide();
+
+                if (response.code === 200) {
+                    SHAdmin.toast.success(isEdit ? '更新成功' : '创建成功');
+                    loadUsers(userState.currentPage);
+                    return true;
+                } else {
+                    SHAdmin.toast.error(response.msg || (isEdit ? '更新失败' : '创建失败'));
+                    return false;
+                }
+            } catch (error) {
+                SHAdmin.loading.hide();
+                SHAdmin.toast.error(error.message || (isEdit ? '更新失败' : '创建失败'));
+                return false;
+            }
+        }
+    });
+}
+
+// ============================================
+// 角色管理功能
+// ============================================
+
+// 角色管理状态
+const roleState = {
+    currentPage: 1,
+    pageSize: 10,
+    total: 0,
+    searchParams: {}
+};
+
 // 加载角色列表
-async function loadRoles() {
+async function loadRoles(page = 1) {
+    roleState.currentPage = page;
     const tbody = document.getElementById('rolesTableBody');
 
     try {
-        const response = await fetch('/api/v1/roleList', {
-            headers: getHeaders()
+        SHAdmin.loading.show('加载中...');
+
+        const params = new URLSearchParams({
+            pageIndex: page,
+            pageSize: roleState.pageSize,
+            ...roleState.searchParams
         });
 
-        if (response.ok) {
-            const data = await response.json();
-            if (data.code === 200 && data.data && data.data.list) {
-                renderRoles(data.data.list);
-            } else {
-                tbody.innerHTML = '<tr><td colspan="5">暂无数据</td></tr>';
-            }
+        const response = await SHAdmin.http.get(`/api/v1/roleList?${params}`);
+
+        if (response.code === 200 && response.data) {
+            roleState.total = response.data.count || 0;
+            renderRoles(response.data.list || []);
+            renderRolePagination();
         } else {
-            tbody.innerHTML = '<tr><td colspan="5">加载失败</td></tr>';
+            tbody.innerHTML = `
+                <tr>
+                    <td colspan="8" class="text-center">
+                        <div class="sh-empty-state">
+                            <div class="sh-empty-state-icon">⚠️</div>
+                            <div class="sh-empty-state-text">${response.msg || '加载失败'}</div>
+                        </div>
+                    </td>
+                </tr>
+            `;
         }
     } catch (error) {
         console.error('Error loading roles:', error);
-        tbody.innerHTML = '<tr><td colspan="5">加载失败</td></tr>';
+        tbody.innerHTML = `
+            <tr>
+                <td colspan="8" class="text-center">
+                    <div class="sh-empty-state">
+                        <div class="sh-empty-state-icon">❌</div>
+                        <div class="sh-empty-state-text">加载失败，请稍后重试</div>
+                    </div>
+                </td>
+            </tr>
+        `;
+    } finally {
+        SHAdmin.loading.hide();
     }
 }
 
@@ -212,19 +500,37 @@ async function loadRoles() {
 function renderRoles(roles) {
     const tbody = document.getElementById('rolesTableBody');
 
-    if (roles.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="5">暂无数据</td></tr>';
+    if (!roles || roles.length === 0) {
+        tbody.innerHTML = `
+            <tr>
+                <td colspan="8" class="text-center">
+                    <div class="sh-empty-state">
+                        <div class="sh-empty-state-icon">📋</div>
+                        <div class="sh-empty-state-text">暂无数据</div>
+                    </div>
+                </td>
+            </tr>
+        `;
         return;
     }
 
     let html = '';
     roles.forEach(role => {
+        const statusBadge = role.status === '2'
+            ? '<span class="sh-badge sh-badge-success">正常</span>'
+            : '<span class="sh-badge sh-badge-error">禁用</span>';
+
+        const createdAt = role.createdAt ? new Date(role.createdAt).toLocaleDateString() : '-';
+
         html += `
             <tr>
                 <td>${role.roleId || role.id}</td>
-                <td>${role.roleName}</td>
-                <td>${role.roleKey}</td>
-                <td>${role.status === '2' ? '正常' : '禁用'}</td>
+                <td><strong>${role.roleName}</strong></td>
+                <td><code>${role.roleKey}</code></td>
+                <td>${role.roleLevel || 0}</td>
+                <td>${role.roleSort || 0}</td>
+                <td>${statusBadge}</td>
+                <td>${createdAt}</td>
                 <td>
                     <button class="edit" onclick="editRole(${role.roleId || role.id})">编辑</button>
                     <button class="delete" onclick="deleteRole(${role.roleId || role.id})">删除</button>
@@ -234,6 +540,152 @@ function renderRoles(roles) {
     });
 
     tbody.innerHTML = html;
+}
+
+// 渲染角色分页
+function renderRolePagination() {
+    SHAdmin.pagination.render('rolePagination', {
+        currentPage: roleState.currentPage,
+        pageSize: roleState.pageSize,
+        total: roleState.total,
+        onPageChange: (page) => {
+            loadRoles(page);
+        }
+    });
+}
+
+// 打开角色创建/编辑模态框
+async function openRoleModal(roleId = null) {
+    const isEdit = roleId !== null;
+    let role = null;
+
+    // 如果是编辑模式，先加载角色数据
+    if (isEdit) {
+        try {
+            SHAdmin.loading.show('加载数据...');
+            const response = await SHAdmin.http.get(`/api/v1/role/${roleId}`);
+            SHAdmin.loading.hide();
+
+            if (response.code === 200 && response.data) {
+                role = response.data;
+            } else {
+                SHAdmin.toast.error(response.msg || '加载角色信息失败');
+                return;
+            }
+        } catch (error) {
+            SHAdmin.loading.hide();
+            SHAdmin.toast.error('加载角色信息失败');
+            return;
+        }
+    }
+
+    // 构建表单HTML
+    const formHtml = `
+        <form id="roleForm">
+            <div class="sh-form-group">
+                <label>角色名称 <span class="required">*</span></label>
+                <input type="text" name="roleName" value="${role?.roleName || ''}"
+                    placeholder="请输入角色名称" required>
+            </div>
+
+            <div class="sh-form-group">
+                <label>角色标识 <span class="required">*</span></label>
+                <input type="text" name="roleKey" value="${role?.roleKey || ''}"
+                    placeholder="请输入角色标识（如：admin、user）" required
+                    ${isEdit ? 'readonly' : ''}>
+                ${isEdit ? '<small style="color: #999;">角色标识创建后不可修改</small>' : ''}
+            </div>
+
+            <div class="sh-form-group">
+                <label>角色级别</label>
+                <input type="number" name="roleLevel" value="${role?.roleLevel || 0}"
+                    placeholder="请输入角色级别（数字越大权限越高）" min="0">
+                <small style="color: #999;">用于权限控制，租户管理员级别为99</small>
+            </div>
+
+            <div class="sh-form-group">
+                <label>排序</label>
+                <input type="number" name="roleSort" value="${role?.roleSort || 0}"
+                    placeholder="请输入排序值" min="0">
+            </div>
+
+            <div class="sh-form-group">
+                <label>数据范围</label>
+                <select name="dataScope">
+                    <option value="1" ${!role || role.dataScope === '1' ? 'selected' : ''}>全部数据</option>
+                    <option value="2" ${role?.dataScope === '2' ? 'selected' : ''}>自定义数据</option>
+                    <option value="3" ${role?.dataScope === '3' ? 'selected' : ''}>本部门数据</option>
+                    <option value="4" ${role?.dataScope === '4' ? 'selected' : ''}>本部门及以下数据</option>
+                    <option value="5" ${role?.dataScope === '5' ? 'selected' : ''}>仅本人数据</option>
+                </select>
+            </div>
+
+            <div class="sh-form-group">
+                <label>状态 <span class="required">*</span></label>
+                <select name="status" required>
+                    <option value="2" ${!role || role.status === '2' ? 'selected' : ''}>正常</option>
+                    <option value="1" ${role?.status === '1' ? 'selected' : ''}>禁用</option>
+                </select>
+            </div>
+
+            <div class="sh-form-group">
+                <label>备注</label>
+                <textarea name="remark" placeholder="请输入备注">${role?.remark || ''}</textarea>
+            </div>
+        </form>
+    `;
+
+    // 打开模态框
+    SHAdmin.modal.open({
+        title: isEdit ? '编辑角色' : '新增角色',
+        content: formHtml,
+        width: '600px',
+        onConfirm: async () => {
+            const formData = new FormData(document.getElementById('roleForm'));
+            const data = Object.fromEntries(formData.entries());
+
+            // 表单验证
+            const validationRules = {
+                roleName: { required: true, message: '请输入角色名称' },
+                roleKey: { required: true, message: '请输入角色标识' },
+                status: { required: true, message: '请选择状态' }
+            };
+
+            const validation = SHAdmin.validate.validateForm(data, validationRules);
+            if (!validation.valid) {
+                const firstError = Object.values(validation.errors)[0];
+                SHAdmin.toast.error(firstError);
+                return false;
+            }
+
+            // 提交数据
+            try {
+                SHAdmin.loading.show(isEdit ? '更新中...' : '创建中...');
+
+                let response;
+                if (isEdit) {
+                    response = await SHAdmin.http.put(`/api/v1/role/${roleId}`, data);
+                } else {
+                    response = await SHAdmin.http.post('/api/v1/role', data);
+                }
+
+                SHAdmin.loading.hide();
+
+                if (response.code === 200) {
+                    SHAdmin.toast.success(isEdit ? '更新成功' : '创建成功');
+                    loadRoles(roleState.currentPage);
+                    return true;
+                } else {
+                    SHAdmin.toast.error(response.msg || (isEdit ? '更新失败' : '创建失败'));
+                    return false;
+                }
+            } catch (error) {
+                SHAdmin.loading.hide();
+                SHAdmin.toast.error(error.message || (isEdit ? '更新失败' : '创建失败'));
+                return false;
+            }
+        }
+    });
 }
 
 // 加载部门列表
@@ -279,36 +731,132 @@ function renderDepartments(depts) {
     deptTree.innerHTML = html;
 }
 
-// 用户操作函数
-function addUser() {
-    alert('添加用户功能');
+// 编辑用户
+function editUser(userId) {
+    openUserModal(userId);
 }
 
-function editUser(id) {
-    alert('编辑用户 ID: ' + id);
-}
+// 删除用户
+async function deleteUser(userId) {
+    const confirmed = await SHAdmin.modal.confirm({
+        title: '确认删除',
+        content: '<p>确定要删除该用户吗？</p><p style="color: #f44336;">此操作不可恢复！</p>',
+        confirmText: '确认删除',
+        cancelText: '取消'
+    });
 
-function deleteUser(id) {
-    if (confirm('确定要删除该用户吗?')) {
-        // 调用删除API
-        alert('删除用户 ID: ' + id);
+    if (!confirmed) return;
+
+    try {
+        SHAdmin.loading.show('删除中...');
+        const response = await SHAdmin.http.delete(`/api/v1/sysUser/${userId}`);
+        SHAdmin.loading.hide();
+
+        if (response.code === 200) {
+            SHAdmin.toast.success('删除成功');
+            loadUsers(userState.currentPage);
+        } else {
+            SHAdmin.toast.error(response.msg || '删除失败');
+        }
+    } catch (error) {
+        SHAdmin.loading.hide();
+        SHAdmin.toast.error('删除失败');
     }
 }
 
-// 角色操作函数
-function addRole() {
-    alert('添加角色功能');
-}
+// 用户搜索
+document.addEventListener('DOMContentLoaded', function() {
+    const searchForm = document.getElementById('userSearchForm');
+    if (searchForm) {
+        searchForm.addEventListener('submit', function(e) {
+            e.preventDefault();
 
-function editRole(id) {
-    alert('编辑角色 ID: ' + id);
-}
+            userState.searchParams = {};
 
-function deleteRole(id) {
-    if (confirm('确定要删除该角色吗?')) {
-        // 调用删除API
-        alert('删除角色 ID: ' + id);
+            const username = document.getElementById('searchUsername').value.trim();
+            const nickName = document.getElementById('searchNickName').value.trim();
+            const status = document.getElementById('searchUserStatus').value;
+
+            if (username) userState.searchParams.username = username;
+            if (nickName) userState.searchParams.nickName = nickName;
+            if (status) userState.searchParams.status = status;
+
+            loadUsers(1);
+        });
     }
+});
+
+// 重置用户搜索
+function resetUserSearch() {
+    document.getElementById('searchUsername').value = '';
+    document.getElementById('searchNickName').value = '';
+    document.getElementById('searchUserStatus').value = '';
+    userState.searchParams = {};
+    loadUsers(1);
+}
+
+// 编辑角色
+function editRole(roleId) {
+    openRoleModal(roleId);
+}
+
+// 删除角色
+async function deleteRole(roleId) {
+    const confirmed = await SHAdmin.modal.confirm({
+        title: '确认删除',
+        content: '<p>确定要删除该角色吗？</p><p style="color: #f44336;">删除角色会影响使用该角色的所有用户，此操作不可恢复！</p>',
+        confirmText: '确认删除',
+        cancelText: '取消'
+    });
+
+    if (!confirmed) return;
+
+    try {
+        SHAdmin.loading.show('删除中...');
+        const response = await SHAdmin.http.delete(`/api/v1/role/${roleId}`);
+        SHAdmin.loading.hide();
+
+        if (response.code === 200) {
+            SHAdmin.toast.success('删除成功');
+            loadRoles(roleState.currentPage);
+        } else {
+            SHAdmin.toast.error(response.msg || '删除失败');
+        }
+    } catch (error) {
+        SHAdmin.loading.hide();
+        SHAdmin.toast.error('删除失败');
+    }
+}
+
+// 角色搜索
+document.addEventListener('DOMContentLoaded', function() {
+    const searchForm = document.getElementById('roleSearchForm');
+    if (searchForm) {
+        searchForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            roleState.searchParams = {};
+
+            const roleName = document.getElementById('searchRoleName').value.trim();
+            const roleKey = document.getElementById('searchRoleKey').value.trim();
+            const status = document.getElementById('searchRoleStatus').value;
+
+            if (roleName) roleState.searchParams.roleName = roleName;
+            if (roleKey) roleState.searchParams.roleKey = roleKey;
+            if (status) roleState.searchParams.status = status;
+
+            loadRoles(1);
+        });
+    }
+});
+
+// 重置角色搜索
+function resetRoleSearch() {
+    document.getElementById('searchRoleName').value = '';
+    document.getElementById('searchRoleKey').value = '';
+    document.getElementById('searchRoleStatus').value = '';
+    roleState.searchParams = {};
+    loadRoles(1);
 }
 
 // 部门操作函数

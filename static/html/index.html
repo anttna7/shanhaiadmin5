@@ -134,50 +134,143 @@
                 </div>
 
                 <div id="users" class="page">
-                    <h2>用户管理</h2>
-                    <div class="table-actions">
-                        <button class="btn-primary" onclick="addUser()">新增用户</button>
+                    <div class="page-header">
+                        <h1>用户管理</h1>
+                        <p>管理系统用户，包括用户信息、角色分配等</p>
                     </div>
-                    <table class="data-table">
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>用户名</th>
-                                <th>姓名</th>
-                                <th>邮箱</th>
-                                <th>状态</th>
-                                <th>操作</th>
-                            </tr>
-                        </thead>
-                        <tbody id="usersTableBody">
-                            <tr>
-                                <td colspan="6">加载中...</td>
-                            </tr>
-                        </tbody>
-                    </table>
+
+                    <!-- 搜索栏 -->
+                    <div class="sh-search-bar">
+                        <form class="sh-search-form" id="userSearchForm">
+                            <div class="sh-form-group">
+                                <label>用户名</label>
+                                <input type="text" id="searchUsername" placeholder="请输入用户名">
+                            </div>
+                            <div class="sh-form-group">
+                                <label>姓名</label>
+                                <input type="text" id="searchNickName" placeholder="请输入姓名">
+                            </div>
+                            <div class="sh-form-group">
+                                <label>状态</label>
+                                <select id="searchUserStatus">
+                                    <option value="">全部</option>
+                                    <option value="2">正常</option>
+                                    <option value="1">禁用</option>
+                                </select>
+                            </div>
+                            <div class="sh-search-actions">
+                                <button type="submit" class="btn btn-primary">搜索</button>
+                                <button type="button" class="btn btn-outline" onclick="resetUserSearch()">重置</button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- 数据表格 -->
+                    <div class="sh-table-container">
+                        <div class="sh-table-header">
+                            <h3>用户列表</h3>
+                            <div class="sh-table-actions">
+                                <button class="btn btn-primary" onclick="openUserModal()">新增用户</button>
+                            </div>
+                        </div>
+                        <div class="sh-table-wrapper">
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>用户名</th>
+                                        <th>姓名</th>
+                                        <th>邮箱</th>
+                                        <th>手机号</th>
+                                        <th>角色</th>
+                                        <th>状态</th>
+                                        <th>操作</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="usersTableBody">
+                                    <tr>
+                                        <td colspan="8" class="text-center">
+                                            <div class="sh-empty-state">
+                                                <div class="sh-empty-state-icon">📋</div>
+                                                <div class="sh-empty-state-text">暂无数据</div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div id="userPagination" class="sh-pagination"></div>
+                    </div>
                 </div>
 
                 <div id="roles" class="page">
-                    <h2>角色管理</h2>
-                    <div class="table-actions">
-                        <button class="btn-primary" onclick="addRole()">新增角色</button>
+                    <div class="page-header">
+                        <h1>角色管理</h1>
+                        <p>管理系统角色，包括角色信息、权限配置等</p>
                     </div>
-                    <table class="data-table">
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>角色名称</th>
-                                <th>角色标识</th>
-                                <th>状态</th>
-                                <th>操作</th>
-                            </tr>
-                        </thead>
-                        <tbody id="rolesTableBody">
-                            <tr>
-                                <td colspan="5">加载中...</td>
-                            </tr>
-                        </tbody>
-                    </table>
+
+                    <!-- 搜索栏 -->
+                    <div class="sh-search-bar">
+                        <form class="sh-search-form" id="roleSearchForm">
+                            <div class="sh-form-group">
+                                <label>角色名称</label>
+                                <input type="text" id="searchRoleName" placeholder="请输入角色名称">
+                            </div>
+                            <div class="sh-form-group">
+                                <label>角色标识</label>
+                                <input type="text" id="searchRoleKey" placeholder="请输入角色标识">
+                            </div>
+                            <div class="sh-form-group">
+                                <label>状态</label>
+                                <select id="searchRoleStatus">
+                                    <option value="">全部</option>
+                                    <option value="2">正常</option>
+                                    <option value="1">禁用</option>
+                                </select>
+                            </div>
+                            <div class="sh-search-actions">
+                                <button type="submit" class="btn btn-primary">搜索</button>
+                                <button type="button" class="btn btn-outline" onclick="resetRoleSearch()">重置</button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- 数据表格 -->
+                    <div class="sh-table-container">
+                        <div class="sh-table-header">
+                            <h3>角色列表</h3>
+                            <div class="sh-table-actions">
+                                <button class="btn btn-primary" onclick="openRoleModal()">新增角色</button>
+                            </div>
+                        </div>
+                        <div class="sh-table-wrapper">
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>角色名称</th>
+                                        <th>角色标识</th>
+                                        <th>角色级别</th>
+                                        <th>排序</th>
+                                        <th>状态</th>
+                                        <th>创建时间</th>
+                                        <th>操作</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="rolesTableBody">
+                                    <tr>
+                                        <td colspan="8" class="text-center">
+                                            <div class="sh-empty-state">
+                                                <div class="sh-empty-state-icon">📋</div>
+                                                <div class="sh-empty-state-text">暂无数据</div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div id="rolePagination" class="sh-pagination"></div>
+                    </div>
                 </div>
 
                 <div id="departments" class="page">
