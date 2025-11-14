@@ -1,0 +1,72 @@
+settings:
+  application:
+    # prod线上环境
+    mode: prod
+    # 服务器ip，0.0.0.0监听所有接口
+    host: 0.0.0.0
+    # 服务名称
+    name: SHAdmin
+    # 端口号
+    port: 8000
+    readtimeout: 10
+    writertimeout: 10
+    # 数据权限功能开关
+    enabledp: true
+  logger:
+    # 日志存放路径
+    path: temp/logs
+    # 日志输出，file：文件，default：命令行，空：同时输出到文件和命令行
+    stdout: ''
+    # 日志等级, trace, debug, info, warn, error, fatal
+    level: info
+    # 数据库日志开关（生产环境建议关闭）
+    enableddb: false
+  jwt:
+    # token 密钥，生产环境务必修改为随机强密码！
+    # 建议使用: openssl rand -base64 32
+    secret: CHANGE_THIS_SECRET_IN_PRODUCTION_USE_STRONG_PASSWORD
+    # token 过期时间 单位：秒 (7200秒=2小时)
+    timeout: 7200
+  database:
+    # 数据库类型
+    driver: postgres
+    # PostgreSQL 连接字符串 - Docker网络内部连接
+    # 容器内通过服务名 'postgres' 连接数据库
+    source: host=postgres port=5432 user=postgres password=postgres dbname=sh_admin sslmode=disable TimeZone=Asia/Shanghai
+  gen:
+    # 代码生成读取的数据库名称
+    dbname: sh_admin
+    # 代码生成前端代码存放位置
+    frontpath: ../shadmin-ui/src
+  extend:
+    demo:
+      name: data
+  cache:
+    # 生产环境推荐使用Redis，这里使用内存缓存
+    memory: ''
+    # Redis配置示例（取消注释以启用）
+    # redis:
+    #   addr: redis:6379
+    #   password: ''
+    #   db: 0
+  queue:
+    # 使用内存队列
+    memory:
+      poolSize: 100
+    # Redis队列配置示例（取消注释以启用）
+    # redis:
+    #   addr: redis:6379
+    #   password: ''
+    #   producer:
+    #     streamMaxLength: 1000
+    #     approximateMaxLength: true
+    #   consumer:
+    #     visibilityTimeout: 60
+    #     bufferSize: 100
+    #     concurrency: 10
+    #     blockingTimeout: 5
+    #     reclaimInterval: 1
+  locker:
+    # Redis分布式锁配置
+    redis:
+      addr: ''

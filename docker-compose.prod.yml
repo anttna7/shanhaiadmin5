@@ -1,0 +1,62 @@
+version: '3.8'
+
+services:
+  # PostgreSQL 数据库服务
+  postgres:
+    image: postgres:18-alpine
+    container_name: shadmin-postgres
+    restart: always
+    environment:
+      POSTGRES_DB: sh_admin
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      TZ: Asia/Shanghai
+      PGTZ: Asia/Shanghai
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+      # - ./config/pg.sql:/docker-entrypoint-initdb.d/pg.sql  # 可选：自动初始化数据库
+    networks:
+      - shadmin-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # SHAdmin 应用服务
+  shadmin-app:
+    container_name: shadmin-app
+    image: shadmin:latest
+    build:
+      context: .
+      dockerfile: Dockerfile.prod
+    restart: always
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      - TZ=Asia/Shanghai
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./config/:/app/config/
+      - ./static/:/app/static/
+      - ./temp/:/app/temp/
+    networks:
+      - shadmin-network
+    healthcheck:
+      test: ["CMD-SHELL", "wget --no-verbose --tries=1 --spider http://localhost:8000/api/v1/health || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+networks:
+  shadmin-network:
+    driver: bridge
+
+volumes:
+  postgres-data:
+    driver: local
