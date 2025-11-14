@@ -525,7 +525,7 @@ body {
 /* 统计卡片 */
 .stats-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: var(--spacing-lg);
     margin-top: var(--spacing-lg);
 }
@@ -533,48 +533,145 @@ body {
 .stat-card {
     background: var(--bg-white);
     padding: var(--spacing-xl);
-    border-radius: var(--radius-lg);
+    border-radius: var(--radius-xl);
     box-shadow: var(--shadow-md);
-    text-align: center;
-    transition: transform var(--transition-base), box-shadow var(--transition-base);
-    border-top: 4px solid transparent;
+    transition: all var(--transition-base);
+    border-left: 4px solid transparent;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+}
+
+.stat-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    opacity: 0.05;
+    transform: translate(40px, -40px);
+    transition: all var(--transition-base);
 }
 
 .stat-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+    transform: translateY(-6px);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15);
+}
+
+.stat-card:hover::before {
+    transform: translate(30px, -30px) scale(1.1);
 }
 
 .stat-card.primary {
-    border-top-color: var(--primary-color);
+    border-left-color: var(--primary-color);
+}
+
+.stat-card.primary::before {
+    background: var(--primary-color);
 }
 
 .stat-card.success {
-    border-top-color: var(--success-color);
+    border-left-color: var(--success-color);
+}
+
+.stat-card.success::before {
+    background: var(--success-color);
 }
 
 .stat-card.warning {
-    border-top-color: var(--warning-color);
+    border-left-color: var(--warning-color);
+}
+
+.stat-card.warning::before {
+    background: var(--warning-color);
 }
 
 .stat-card.info {
-    border-top-color: var(--info-color);
+    border-left-color: var(--info-color);
 }
 
-.stat-card h3 {
-    color: var(--text-secondary);
-    font-size: 14px;
-    font-weight: 500;
+.stat-card.info::before {
+    background: var(--info-color);
+}
+
+/* 统计卡片图标 */
+.stat-icon {
+    width: 64px;
+    height: 64px;
+    border-radius: var(--radius-lg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
     margin-bottom: var(--spacing-sm);
+    position: relative;
+    z-index: 1;
+    transition: all var(--transition-base);
+}
+
+.stat-icon svg {
+    width: 32px;
+    height: 32px;
+}
+
+.stat-card.primary .stat-icon {
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-hover));
+    color: white;
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+}
+
+.stat-card.success .stat-icon {
+    background: linear-gradient(135deg, var(--success-color), #43a047);
+    color: white;
+    box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
+}
+
+.stat-card.warning .stat-icon {
+    background: linear-gradient(135deg, var(--warning-color), #f57c00);
+    color: white;
+    box-shadow: 0 4px 12px rgba(255, 152, 0, 0.3);
+}
+
+.stat-card.info .stat-icon {
+    background: linear-gradient(135deg, var(--info-color), #1976d2);
+    color: white;
+    box-shadow: 0 4px 12px rgba(33, 150, 243, 0.3);
+}
+
+.stat-card:hover .stat-icon {
+    transform: scale(1.05) rotate(5deg);
+}
+
+/* 统计卡片内容 */
+.stat-content {
+    flex: 1;
+    text-align: left;
+    position: relative;
+    z-index: 1;
+}
+
+.stat-content h3 {
+    color: var(--text-secondary);
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: var(--spacing-xs);
     text-transform: uppercase;
-    letter-spacing: 0.5px;
+    letter-spacing: 0.8px;
 }
 
 .stat-number {
-    font-size: 36px;
+    font-size: 32px;
     font-weight: 700;
+    color: var(--text-primary);
+    margin: var(--spacing-xs) 0;
+    line-height: 1.2;
+}
+
+.stat-card.primary .stat-number {
     color: var(--primary-color);
-    margin: var(--spacing-sm) 0;
 }
 
 .stat-card.success .stat-number {
@@ -590,9 +687,75 @@ body {
 }
 
 .stat-change {
-    font-size: 13px;
+    font-size: 12px;
     color: var(--text-muted);
-    margin-top: var(--spacing-sm);
+    margin-top: var(--spacing-xs);
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+/* 进度条 */
+.stat-progress {
+    position: relative;
+    z-index: 1;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 6px;
+    background: var(--bg-color);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    border-radius: 10px;
+    transition: width 1s ease-out;
+    position: relative;
+    overflow: hidden;
+}
+
+.progress-fill::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.3),
+        transparent
+    );
+    animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+    0% {
+        transform: translateX(-100%);
+    }
+    100% {
+        transform: translateX(100%);
+    }
+}
+
+.progress-fill.primary {
+    background: linear-gradient(90deg, var(--primary-color), var(--primary-hover));
+}
+
+.progress-fill.success {
+    background: linear-gradient(90deg, var(--success-color), #43a047);
+}
+
+.progress-fill.warning {
+    background: linear-gradient(90deg, var(--warning-color), #f57c00);
+}
+
+.progress-fill.info {
+    background: linear-gradient(90deg, var(--info-color), #1976d2);
 }
 
 /* 表格操作区 */

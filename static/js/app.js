@@ -175,8 +175,14 @@ async function loadUserStats() {
             const activePercent = total > 0 ? Math.round((activeCount / total) * 100) : 0;
 
             document.getElementById('totalUsersChange').innerHTML = `
+                <span style="color: ${activePercent >= 80 ? '#4caf50' : activePercent >= 50 ? '#ff9800' : '#f44336'}">↑</span>
                 活跃用户 ${activeCount} 人 (${activePercent}%)
             `;
+
+            // 动画显示进度条
+            setTimeout(() => {
+                document.getElementById('userProgress').style.width = activePercent + '%';
+            }, 100);
         } else {
             throw new Error('获取用户统计失败');
         }
@@ -199,10 +205,17 @@ async function loadRoleStats() {
             // 计算启用的角色数
             const activeResponse = await SHAdmin.http.get('/api/v1/roleList?pageIndex=1&pageSize=1&status=2');
             const activeCount = activeResponse.data?.count || 0;
+            const activePercent = total > 0 ? Math.round((activeCount / total) * 100) : 0;
 
             document.getElementById('totalRolesChange').innerHTML = `
-                启用角色 ${activeCount} 个
+                <span style="color: #4caf50">↑</span>
+                启用角色 ${activeCount} 个 (${activePercent}%)
             `;
+
+            // 动画显示进度条
+            setTimeout(() => {
+                document.getElementById('roleProgress').style.width = activePercent + '%';
+            }, 100);
         } else {
             throw new Error('获取角色统计失败');
         }
@@ -223,7 +236,18 @@ async function loadDeptStats() {
             const total = depts.length;
             document.getElementById('totalDepts').textContent = total;
 
-            document.getElementById('totalDeptsChange').textContent = total > 0 ? '组织架构完善' : '暂无部门';
+            // 模拟进度（基于部门数量）
+            const progress = Math.min(100, (total / 10) * 100); // 假设最多10个部门为100%
+
+            document.getElementById('totalDeptsChange').innerHTML = `
+                <span style="color: #2196f3">↑</span>
+                ${total > 0 ? '组织架构完善' : '暂无部门'}
+            `;
+
+            // 动画显示进度条
+            setTimeout(() => {
+                document.getElementById('deptProgress').style.width = progress + '%';
+            }, 100);
         } else {
             throw new Error('获取部门统计失败');
         }
@@ -246,10 +270,17 @@ async function loadTenantStats() {
             // 计算活跃租户数
             const activeResponse = await SHAdmin.http.get('/api/v1/tenant?pageIndex=1&pageSize=1&status=2');
             const activeCount = activeResponse.data?.count || 0;
+            const activePercent = total > 0 ? Math.round((activeCount / total) * 100) : 0;
 
             document.getElementById('totalTenantsChange').innerHTML = `
-                活跃租户 ${activeCount} 个
+                <span style="color: #ff9800">↑</span>
+                活跃租户 ${activeCount} 个 (${activePercent}%)
             `;
+
+            // 动画显示进度条
+            setTimeout(() => {
+                document.getElementById('tenantProgress').style.width = activePercent + '%';
+            }, 100);
         } else {
             throw new Error('获取租户统计失败');
         }
