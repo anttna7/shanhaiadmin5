@@ -792,6 +792,9 @@ body {
 .data-table thead {
     background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
     color: white;
+    position: sticky;
+    top: 0;
+    z-index: 10;
 }
 
 .data-table th {
@@ -800,69 +803,105 @@ body {
     font-weight: 600;
     text-transform: uppercase;
     font-size: 12px;
-    letter-spacing: 0.5px;
+    letter-spacing: 0.8px;
+    white-space: nowrap;
 }
 
 .data-table td {
     padding: var(--spacing-md) var(--spacing-md);
     text-align: left;
     color: var(--text-primary);
+    vertical-align: middle;
 }
 
 .data-table tbody tr {
     border-bottom: 1px solid var(--border-light);
-    transition: background var(--transition-fast);
+    transition: all var(--transition-fast);
 }
 
 .data-table tbody tr:last-child {
     border-bottom: none;
 }
 
+.data-table tbody tr:nth-child(even) {
+    background: rgba(102, 126, 234, 0.02);
+}
+
 .data-table tbody tr:hover {
-    background: #f8f9fa;
+    background: rgba(102, 126, 234, 0.08);
+    transform: translateX(2px);
+    box-shadow: -3px 0 0 var(--primary-color);
 }
 
 .data-table button {
-    padding: 6px 12px;
-    margin: 0 var(--spacing-xs);
+    padding: 6px 14px;
+    margin: 0 3px;
     border: none;
     border-radius: var(--radius-sm);
     cursor: pointer;
-    font-size: 13px;
+    font-size: 12px;
     font-weight: 500;
-    transition: all var(--transition-fast);
+    transition: all var(--transition-base);
+    position: relative;
+    overflow: hidden;
+}
+
+.data-table button::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+.data-table button:hover::before {
+    width: 300px;
+    height: 300px;
 }
 
 .data-table button:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
 .data-table button.edit {
-    background: var(--success-color);
+    background: linear-gradient(135deg, var(--success-color), #43a047);
     color: white;
 }
 
 .data-table button.edit:hover {
-    background: #43a047;
+    background: linear-gradient(135deg, #43a047, var(--success-color));
 }
 
 .data-table button.delete {
-    background: var(--error-color);
+    background: linear-gradient(135deg, var(--error-color), #d32f2f);
     color: white;
 }
 
 .data-table button.delete:hover {
-    background: #d32f2f;
+    background: linear-gradient(135deg, #d32f2f, var(--error-color));
 }
 
 .data-table button.view {
-    background: var(--info-color);
+    background: linear-gradient(135deg, var(--info-color), #1976d2);
     color: white;
 }
 
 .data-table button.view:hover {
-    background: #1976d2;
+    background: linear-gradient(135deg, #1976d2, var(--info-color));
+}
+
+/* 表格操作按钮组 */
+.table-actions-group {
+    display: flex;
+    gap: 4px;
+    justify-content: flex-start;
+    flex-wrap: wrap;
 }
 
 /* 部门树 */
@@ -877,10 +916,17 @@ body {
 /* 卡片组件 */
 .card {
     background: var(--bg-white);
-    border-radius: var(--radius-lg);
+    border-radius: var(--radius-xl);
     box-shadow: var(--shadow-md);
     padding: var(--spacing-xl);
     margin-bottom: var(--spacing-lg);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    transition: all var(--transition-base);
+}
+
+.card:hover {
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+    transform: translateY(-2px);
 }
 
 .card-header {
@@ -889,17 +935,42 @@ body {
     align-items: center;
     margin-bottom: var(--spacing-lg);
     padding-bottom: var(--spacing-md);
-    border-bottom: 2px solid var(--border-light);
+    border-bottom: 3px solid transparent;
+    border-image: linear-gradient(90deg, var(--primary-color), var(--secondary-color)) 1;
+    position: relative;
+}
+
+.card-header::before {
+    content: '';
+    position: absolute;
+    bottom: -3px;
+    left: 0;
+    width: 80px;
+    height: 3px;
+    background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+    border-radius: 2px;
 }
 
 .card-header h3 {
     font-size: 18px;
     font-weight: 600;
     color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+.card-header h3::before {
+    content: '';
+    width: 4px;
+    height: 20px;
+    background: linear-gradient(180deg, var(--primary-color), var(--secondary-color));
+    border-radius: 2px;
 }
 
 .card-body {
     color: var(--text-primary);
+    animation: fadeIn 0.4s ease;
 }
 
 /* 徽章 */
